@@ -1,0 +1,8 @@
+.navbar-fixed-bottom{
+    background-color: #999999;
+    height: 7%;
+}
+.navbar-fixed-bottom .row{
+    padding-top: 1%;
+    padding-left: 2%;
+}
