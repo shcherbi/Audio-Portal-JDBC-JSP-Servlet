@@ -26,11 +26,13 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
     private static final String ALBUM_ID = "idAlbum";
     private static final String GENRE_ID = "idGenre";
     private static final String PRICE = "price";
+    private static final String LINK = "link";
+    private static final String IMAGE_LINK = "image_link";
 
-    private static final String SQL_SELECT_ALL_AUDIO_TRACK = "SELECT idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre,price FROM audio_track";
-    private static final String SQL_FIND_AUDIO_TRACK_BY_ID = "SELECT idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre,price FROM audio_track WHERE idAudio_Track=?";
-    private static final String SQL_UPDATE_AUDIO_TRACK = "UPDATE audio_track SET `audio_track`.name=?, artist=?, idAlbum=?, idGenre=?, price=? WHERE idAudio_Track=?";
-    private static final String SQL_DELETE_AUDIO_TRACK = "DELETE idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre,price FROM audio_track WHERE idAudio_Track=?";
+    private static final String SQL_SELECT_ALL_AUDIO_TRACK = "SELECT idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM audio_track";
+    private static final String SQL_FIND_AUDIO_TRACK_BY_ID = "SELECT idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM audio_track WHERE idAudio_Track=?";
+    private static final String SQL_UPDATE_AUDIO_TRACK = "UPDATE audio_track SET `audio_track`.name=?, artist=?, idAlbum=?, idGenre=?, price=?, link=?, image_link=? WHERE idAudio_Track=?";
+    private static final String SQL_DELETE_AUDIO_TRACK = "DELETE idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM audio_track WHERE idAudio_Track=?";
 
     @Override
     public List<AudioTrack> getAll() {
@@ -48,7 +50,9 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
                 int idAlbum = resultSet.getInt(ALBUM_ID);
                 int idGenre = resultSet.getInt(GENRE_ID);
                 BigDecimal price = resultSet.getBigDecimal(PRICE);
-                AudioTrack audioTrack = new AudioTrack(id, trackName, artist, idAlbum, idGenre, price);
+                String link = resultSet.getString(LINK);
+                String imageLink = resultSet.getString(IMAGE_LINK);
+                AudioTrack audioTrack = new AudioTrack(id, trackName, artist, idAlbum, idGenre, price, link,imageLink);
                 audioTracks.add(audioTrack);
             }
             LOGGER.log(Level.INFO, "Received all audio tracks from the database");
@@ -82,7 +86,9 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
                 int idAlbum = resultSet.getInt(ALBUM_ID);
                 int idGenre = resultSet.getInt(GENRE_ID);
                 BigDecimal price = resultSet.getBigDecimal(PRICE);
-                audioTrack = new AudioTrack(idAudioTrack, trackName, artist, idAlbum, idGenre, price);
+                String link = resultSet.getString(LINK);
+                String imageLink = resultSet.getString(IMAGE_LINK);
+                audioTrack = new AudioTrack(idAudioTrack, trackName, artist, idAlbum, idGenre, price, link, imageLink);
             }
             LOGGER.log(Level.INFO, "Received audio track from the database");
         } catch (CommonException e) {
@@ -114,7 +120,9 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
             statement.setInt(3, audioTrack.getIdAlbum());
             statement.setInt(4, audioTrack.getIdGenre());
             statement.setBigDecimal(5, audioTrack.getPrice());
-            statement.setInt(6, audioTrack.getId());
+            statement.setString(6, audioTrack.getLinkPath());
+            statement.setString(7, audioTrack.getImagePath());
+            statement.setInt(8, audioTrack.getId());
             statement.executeUpdate();
             LOGGER.log(Level.INFO, "Updated audio track in the database");
         } catch (CommonException e) {

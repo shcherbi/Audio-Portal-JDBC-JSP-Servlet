@@ -15,7 +15,8 @@ public class LoginCommand extends ActionCommand {
     private static final String SIGN_IN_VALUE = "true";
     private static final String LOCALE_ATTRIBUTE = "locale";
     private static final String LOGIN_ERROR_ATTRIBUTE = "errorLoginPassMessage";
-    private static final String MAIN_PAGE = "path.page.main";
+/*    private static final String MAIN_PAGE = "path.page.main";*/
+    private static final String MAIN_PAGE_ACTION = "/web?command=main";
     private static final String LOGIN_PAGE = "path.page.login";
     private static final String LOGIN_PASSWORD_MESSAGE = "message.login.errorLoginPass";
 
@@ -31,7 +32,7 @@ public class LoginCommand extends ActionCommand {
         String nickname = requestContent.getReguestParameterValue(NICKNAME_PARAMETER);
         String password = requestContent.getReguestParameterValue(PASSWORD_PARAMETER);
         if (loginLogic.checkLogin(nickname, password)) {
-            page = ConfigurationManager.getProperty(MAIN_PAGE);
+            page = MAIN_PAGE_ACTION;
             UserLogic userLogic = new UserLogic();
             User user = userLogic.findUser(nickname);
             requestContent.setSessionAttributeValue(ROLE_ATTRIBUTE, user.getRole());

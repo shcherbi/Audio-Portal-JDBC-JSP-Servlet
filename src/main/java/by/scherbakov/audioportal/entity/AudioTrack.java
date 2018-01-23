@@ -10,14 +10,19 @@ public class AudioTrack {
     private int idAlbum;
     private int idGenre;
     private BigDecimal price;
+    private String linkPath;
+    private String imagePath;
 
-    public AudioTrack(int id, String name, String artist, int idAlbum, int idGenre, BigDecimal price) {
+    public AudioTrack(int id, String name, String artist, int idAlbum, int idGenre,
+                      BigDecimal price, String linkPath, String imagePath) {
         this.id = id;
         this.name = name;
         this.artist = artist;
         this.idAlbum = idAlbum;
         this.idGenre = idGenre;
         this.price = price;
+        this.linkPath = linkPath;
+        this.imagePath = imagePath;
     }
 
     public int getId() {
@@ -68,6 +73,22 @@ public class AudioTrack {
         this.price = price;
     }
 
+    public String getLinkPath() {
+        return linkPath;
+    }
+
+    public void setLinkPath(String linkPath) {
+        this.linkPath = linkPath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,12 +99,14 @@ public class AudioTrack {
                 idGenre == that.idGenre &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(artist, that.artist) &&
-                Objects.equals(price, that.price);
+                Objects.equals(price, that.price) &&
+                Objects.equals(linkPath, that.linkPath) &&
+                Objects.equals(imagePath, that.imagePath);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, artist, idAlbum, idGenre, price);
+        return Objects.hash(id, name, artist, idAlbum, idGenre, price, linkPath, imagePath);
     }
 }

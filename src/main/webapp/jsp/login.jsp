@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/loginStyle.css">
+    <link rel="stylesheet" href="../css/footerStyle.css">
     <title><fmt:message key="page.login.title"/></title>
 </head>
 <body>
@@ -18,7 +19,7 @@
         <h1><img src="../images/logogreen.png" height="90px" width="105px">Imaginarium Music</h1>
     </div>
 </div>
-<div class="container">
+<div class="container-fixed">
     <form class="form-signIn" method="POST" action="${pageContext.request.contextPath}/web">
         <input type="hidden" name="command" value="login"/>
         <input type="text" name="nickname" class="form-control" placeholder="<fmt:message key="page.login.login"/>">

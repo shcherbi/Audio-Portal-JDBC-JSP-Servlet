@@ -28,9 +28,9 @@ public class UserDAO extends AbstractDAO<User> {
     private static final String SQL_FIND_USER_BY_LOGIN = "SELECT login, password, email, role, bonus FROM user WHERE login=?";
     private static final String SQL_UPDATE_USER = "UPDATE user SET password=?, email=?, role=?,bonus=? WHERE login=?";
     private static final String SQL_DELETE_USER = "DELETE login, password, email, role, bonus FROM user WHERE login=?";
+    private static final String SQL_ADD_USER = "INSERT INTO user(login, password, email, role, bonus) VALUES(?,?,?,?,?)";
 
    /* private static final String SQL_FIND_PASSWORD_BY_LOGIN = "SELECT password FROM users WHERE nickname=?";
-    private static final String SQL_ADD_USER = "INSERT INTO users(nickname,password,card_number, email) VALUES(?,?,?,?)";
     private static final String SQL_ADD_USER_WITHOUT_CARD = "INSERT INTO users(nickname,password, email) VALUES(?,?,?)";
     private static final String SQL_FIND_USER_BY_EMAIL = "SELECT id, nickname, password, status, money, bonus, card_number, email FROM  users WHERE email=?";
     private static final String SQL_FIND_USER_BY_CARD = "SELECT id, nickname, password, status, money, bonus, card_number, email FROM  users WHERE card_number=?";
@@ -187,4 +187,32 @@ public class UserDAO extends AbstractDAO<User> {
         return password;
     }
 
+    public boolean addUser(String login, String password, String email,String role,String bonus) {
+        boolean isAdded = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            if (login == null||login.isEmpty()||password==null||password.isEmpty()||email==null||email.isEmpty()) {
+                throw new CommonException();
+            }
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SQL_ADD_USER);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            statement.setString(3, email);
+            statement.setString(4, role);
+            statement.setString(5, bonus);
+            statement.executeUpdate();
+            LOGGER.log(Level.INFO, "Added user to the database");
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameters!", e);
+        } catch (SQLException e) {
+            LOGGER.error("SQLException in trying to add user", e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().closeConnection(connection);
+            }
+        }
+        return isAdded;
+    }
 }

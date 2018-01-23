@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/registerStyle.css">
+    <link rel="stylesheet" href="../css/footerStyle.css">
     <title><fmt:message key="page.registration.title"/></title>
 </head>
 <body>
 <div class="container text-center">
-    <img src="../images/logogreen.png" height="90px" width="105px">
+    <br><br>
+    <a href="${pageContext.request.contextPath}/jsp/login.jsp"><img src="../images/logogreen.png" height="90px" width="105px"></a>
     <br><br><br>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">

@@ -1,0 +1,28 @@
+body {
+    font-family: 'Raleway', sans-serif !important;
+    background-color: #eee;
+}
+
+.card-price {
+    color: #98CA5A;
+}
+
+.row {
+    margin-top: 7% !important;
+}
+
+.thumbnail {
+    width: 250px;
+    background-color: #777777 !important;
+}
+
+.thumbnail p, .thumbnail h4 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+audio {
+    width: 200px !important;
+    margin-right: 3px;
+}
