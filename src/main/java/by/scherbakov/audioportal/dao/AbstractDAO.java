@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.util.List;
 
 public abstract class AbstractDAO<T> {
-    public abstract List<T> getAll();
+    public abstract List<T> takeAll();
 
-    public abstract T get(String id);
+    public abstract T take(String id);
 
     public abstract void update(T object);
 

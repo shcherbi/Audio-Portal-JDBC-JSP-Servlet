@@ -2,7 +2,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="properties.content"/>
-<html>
 <footer class="navbar-fixed-bottom">
         <div class="row">
             <div class="col-xs-8">
@@ -15,4 +14,3 @@
             </div>
         </div>
 </footer>
-</html>

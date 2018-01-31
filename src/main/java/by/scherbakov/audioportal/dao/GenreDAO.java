@@ -28,7 +28,7 @@ public class GenreDAO extends AbstractDAO<Genre> {
     private static final String SQL_DELETE_GENRE = "DELETE idGenre, genre FROM genre WHERE idGenre=?";
 
     @Override
-    public List<Genre> getAll() {
+    public List<Genre> takeAll() {
         List<Genre> genres = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -44,7 +44,7 @@ public class GenreDAO extends AbstractDAO<Genre> {
             }
             LOGGER.log(Level.INFO, "Received all genres from the database");
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get all genres", e);
+            LOGGER.error("SQLException in trying to take all genres", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
@@ -54,7 +54,7 @@ public class GenreDAO extends AbstractDAO<Genre> {
     }
 
     @Override
-    public Genre get(String id) {
+    public Genre take(String id) {
         Genre genre = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -77,7 +77,7 @@ public class GenreDAO extends AbstractDAO<Genre> {
         } catch (NumberFormatException e) {
             LOGGER.error("Unable to convert string to integer", e);
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get genre", e);
+            LOGGER.error("SQLException in trying to take genre", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);

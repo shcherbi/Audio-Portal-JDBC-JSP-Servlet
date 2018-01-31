@@ -46,7 +46,7 @@ public class UserDAO extends AbstractDAO<User> {
     private static final String SQL_FIND_MONEY_BY_ID = "SELECT money FROM users WHERE id=?";*/
 
     @Override
-    public List<User> getAll() {
+    public List<User> takeAll() {
         List<User> users = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -65,7 +65,7 @@ public class UserDAO extends AbstractDAO<User> {
             }
             LOGGER.log(Level.INFO, "Received all users from the database");
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get all users", e);
+            LOGGER.error("SQLException in trying to take all users", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
@@ -75,7 +75,7 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public User get(String login) {
+    public User take(String login) {
         User user = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -98,7 +98,7 @@ public class UserDAO extends AbstractDAO<User> {
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. Login=null or login is empty!", e);
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get user", e);
+            LOGGER.error("SQLException in trying to take user", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);

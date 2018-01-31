@@ -35,7 +35,7 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
     private static final String SQL_DELETE_AUDIO_TRACK = "DELETE idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM audio_track WHERE idAudio_Track=?";
 
     @Override
-    public List<AudioTrack> getAll() {
+    public List<AudioTrack> takeAll() {
         List<AudioTrack> audioTracks = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -57,7 +57,7 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
             }
             LOGGER.log(Level.INFO, "Received all audio tracks from the database");
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get all audio tracks", e);
+            LOGGER.error("SQLException in trying to take all audio tracks", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
@@ -67,7 +67,7 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
     }
 
     @Override
-    public AudioTrack get(String id) {
+    public AudioTrack take(String id) {
         AudioTrack audioTrack = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -96,7 +96,7 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
         } catch (NumberFormatException e) {
             LOGGER.error("Unable to convert string to integer", e);
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get audio track", e);
+            LOGGER.error("SQLException in trying to take audio track", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);

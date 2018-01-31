@@ -7,6 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <link rel="icon" href="../../images/logogreen.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/headerStyle.css">
@@ -18,10 +19,10 @@
 <body>
 <jsp:include page="../common/header.jsp"/>
 <div class="container">
-    <div class="row display-flex text-center">
+    <div class="row display-flex">
         <c:forEach var="track" items="${tracks}">
             <div class="col-sm-3">
-                <div class="thumbnail">
+                <div class="thumbnail text-center">
                     <div class="card-body">
                         <h4 class="card-title">
                             <b><c:out value="${track.artist}"/> -
@@ -37,8 +38,12 @@
                                 <source src="${track.linkPath}" type="audio/mpeg"/>
                             </audio>
                         </div>
-                        <p class="card-text">
-                        </p>
+                        <br>
+                        <a href="${pageContext.request.contextPath}/web?command=track_info&track=${track.id}">
+                            <button type="submit" name="trackInfo" class="btn">
+                                ...
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

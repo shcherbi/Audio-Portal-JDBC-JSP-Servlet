@@ -20,7 +20,7 @@ public class UserLogic {
                 throw new LogicException();
             }
             UserDAO userDAO = new UserDAO();
-            user=userDAO.get(login);
+            user=userDAO.take(login);
             LOGGER.log(Level.INFO, "User retrieved by login");
         }catch (LogicException e){
             LOGGER.error("Invalid login. Login=null or login is empty");

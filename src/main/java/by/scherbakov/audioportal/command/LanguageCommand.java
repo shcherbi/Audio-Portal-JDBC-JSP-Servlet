@@ -3,10 +3,14 @@ package by.scherbakov.audioportal.command;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
-public class LanguageCommand extends ActionCommand {
+public class LanguageCommand implements ActionCommand {
     private static final String LANGUAGE_PARAMETER = "lang";
     private static final String LOCALE_ATTRIBUTE = "locale";
+    private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
+    private static final String SIGN_IN_VALUE = "true";
     private static final String LOGIN_PAGE = "path.page.login";
+    private static final String MAIN_PAGE = "path.page.main";
+
 
     @Override
     public String execute(SessionRequestContent requestContent) {
@@ -15,7 +19,12 @@ public class LanguageCommand extends ActionCommand {
         if (newLocale != null) {
             requestContent.setSessionAttributeValue(LOCALE_ATTRIBUTE, newLocale);
         }
-        page = ConfigurationManager.getProperty(LOGIN_PAGE);
+        String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
+        if(SIGN_IN_VALUE.equalsIgnoreCase(isSignIn)){
+            page = ConfigurationManager.getProperty(MAIN_PAGE);
+        }else {
+            page = ConfigurationManager.getProperty(LOGIN_PAGE);
+        }
         return page;
     }
 }

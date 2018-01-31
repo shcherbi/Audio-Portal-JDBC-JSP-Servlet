@@ -4,7 +4,7 @@ import by.scherbakov.audioportal.logic.UserLogic;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
-public class RegistrationCommand extends ActionCommand {
+public class RegistrationCommand implements ActionCommand {
     private static final String NICKNAME_PARAMETER = "nickname";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String EMAIL_PARAMETER = "email";

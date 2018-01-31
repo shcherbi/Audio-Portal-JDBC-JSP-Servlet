@@ -1,4 +1,18 @@
-.navbar-fixed-top{
+.navbar-fixed-top {
     background-color: black;
     margin-bottom: auto;
+}
+
+.navbar-brand {
+    margin-top: -12px !important;
+}
+
+li a:hover {
+    background-color: #98CA5A !important;
+}
+b.allGreen {
+    color: #98CA5A !important;
+}
+.cart-brand {
+    margin-top: 5px;
 }

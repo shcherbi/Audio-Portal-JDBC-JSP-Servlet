@@ -32,7 +32,7 @@ public class OrderDAO extends AbstractDAO<Order> {
     private static final String SQL_DELETE_ORDER = "DELETE idOrder, login, card_number, svc_code, `order`.date FROM `audio_portal`.order WHERE idOrder=?";
 
     @Override
-    public List<Order> getAll() {
+    public List<Order> takeAll() {
         List<Order> orders = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -51,7 +51,7 @@ public class OrderDAO extends AbstractDAO<Order> {
             }
             LOGGER.log(Level.INFO, "Received all orders from the database");
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get all orders", e);
+            LOGGER.error("SQLException in trying to take all orders", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
@@ -61,7 +61,7 @@ public class OrderDAO extends AbstractDAO<Order> {
     }
 
     @Override
-    public Order get(String id) {
+    public Order take(String id) {
         Order order = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -87,7 +87,7 @@ public class OrderDAO extends AbstractDAO<Order> {
         } catch (NumberFormatException e) {
             LOGGER.error("Unable to convert string to integer", e);
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get order", e);
+            LOGGER.error("SQLException in trying to take order", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);

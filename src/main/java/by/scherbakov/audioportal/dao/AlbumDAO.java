@@ -29,7 +29,7 @@ public class AlbumDAO extends AbstractDAO<Album> {
     private static final String SQL_DELETE_ALBUM = "DELETE idAlbum, album_name, studio, `album`.date FROM album WHERE idAlbum=?";
 
     @Override
-    public List<Album> getAll() {
+    public List<Album> takeAll() {
         List<Album> albums = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -47,7 +47,7 @@ public class AlbumDAO extends AbstractDAO<Album> {
             }
             LOGGER.log(Level.INFO, "Received all albums from the database");
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get all albums", e);
+            LOGGER.error("SQLException in trying to take all albums", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);
@@ -57,7 +57,7 @@ public class AlbumDAO extends AbstractDAO<Album> {
     }
 
     @Override
-    public Album get(String id) {
+    public Album take(String id) {
         Album album = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -82,7 +82,7 @@ public class AlbumDAO extends AbstractDAO<Album> {
         }catch(NumberFormatException e){
             LOGGER.error("Unable to convert string to integer", e);
         } catch (SQLException e) {
-            LOGGER.error("SQLException in trying to get album", e);
+            LOGGER.error("SQLException in trying to take album", e);
         } finally {
             if (connection != null) {
                 ConnectionPool.getInstance().closeConnection(connection);

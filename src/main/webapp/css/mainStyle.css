@@ -26,3 +26,14 @@ audio {
     width: 200px !important;
     margin-right: 3px;
 }
+
+.btn:hover {
+    background-color: #98CA5A !important;
+}
+
+a{
+    color: #98CA5A !important;
+}
+a:hover{
+    color: #65863C !important;
+}
