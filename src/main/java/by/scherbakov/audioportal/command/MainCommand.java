@@ -17,7 +17,7 @@ public class MainCommand implements ActionCommand {
         List<AudioTrack> tracks;
         AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
         tracks = audioTrackLogic.takeAllTrack();
-        requestContent.setSessionAttributeValue(TRACKS_ATTRIBUTE, tracks);
+        requestContent.setRequestAttributeValue(TRACKS_ATTRIBUTE, tracks);
         page = ConfigurationManager.getProperty(MAIN_PAGE);
         return page;
     }

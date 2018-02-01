@@ -6,6 +6,7 @@ public enum CommandType {
     LANGUAGE(new LanguageCommand()),
     REGISTRATION(new RegistrationCommand()),
     MAIN(new MainCommand()),
+    FIND(new FindTrackCommand()),
     TRACK_INFO(new TrackInfoCommand()),
     COMMENT_ADD(new CommentAddCommand()),
     ORDER_LIST_ADD(new OrderListAddCommand()),

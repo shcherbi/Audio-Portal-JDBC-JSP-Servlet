@@ -18,6 +18,9 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
+<div class="findError">
+    ${mistakeSongName}
+</div>
 <div class="container">
     <div class="row display-flex">
         <c:forEach var="track" items="${tracks}">

@@ -12,6 +12,13 @@
         <ul class="nav navbar-nav">
             <li><a href="${pageContext.request.contextPath}/jsp/user/about.jsp"><fmt:message key="page.header.about"/></a></li>
         </ul>
+        <form class="navbar-form navbar-left" action="${pageContext.request.contextPath}/web">
+            <input type="hidden" name="command" value="find"/>
+            <div class="form-group">
+                <input type="text" class="form-control" name="findText" placeholder=<fmt:message key="page.header.findPlaceholder"/>>
+            </div>
+            <button type="submit" class="btn find"><fmt:message key="page.header.find"/></button>
+        </form>
         <ul class="nav navbar-nav navbar-right">
             <li><b class="allGreen">${orderList.size()}</b>
             </li>

@@ -34,6 +34,8 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
     private static final String SQL_UPDATE_AUDIO_TRACK = "UPDATE audio_track SET `audio_track`.name=?, artist=?, idAlbum=?, idGenre=?, price=?, link=?, image_link=? WHERE idAudio_Track=?";
     private static final String SQL_DELETE_AUDIO_TRACK = "DELETE idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM audio_track WHERE idAudio_Track=?";
 
+    private static final String SQL_FIND_AUDIO_TRACK_BY_NAME = "SELECT idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM audio_track WHERE `audio_track`.name=?";
+
     @Override
     public List<AudioTrack> takeAll() {
         List<AudioTrack> audioTracks = new ArrayList<>();
@@ -158,5 +160,40 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+    }
+
+    public AudioTrack findAudioTrackByName(String trackName) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        AudioTrack audioTrack=null;
+        try {
+            if (trackName==null||trackName.isEmpty()) {
+                throw new CommonException();
+            }
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SQL_FIND_AUDIO_TRACK_BY_NAME);
+            statement.setString(1, trackName);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int idAudioTrack = resultSet.getInt(AUDIO_TRACK_ID);
+                String artist = resultSet.getString(ARTIST);
+                int idAlbum = resultSet.getInt(ALBUM_ID);
+                int idGenre = resultSet.getInt(GENRE_ID);
+                BigDecimal price = resultSet.getBigDecimal(PRICE);
+                String link = resultSet.getString(LINK);
+                String imageLink = resultSet.getString(IMAGE_LINK);
+                audioTrack = new AudioTrack(idAudioTrack, trackName, artist, idAlbum, idGenre, price, link, imageLink);
+            }
+            LOGGER.log(Level.INFO, "Take audio track from the database");
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameter.", e);
+        } catch (SQLException e) {
+            LOGGER.error("SQLException in trying to find audio track", e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().closeConnection(connection);
+            }
+        }
+        return audioTrack;
     }
 }

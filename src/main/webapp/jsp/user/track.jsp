@@ -58,7 +58,7 @@
                         <input type="hidden" name="command" value="comment_add">
                         <textarea placeholder="<fmt:message key="page.trackInfo.commentPlaceholder"/>" name="text"></textarea>
                         ${mistakeComment}
-                        <button type="submit" class="btn"><fmt:message key="page.trackInfo.share"/></button>
+                        <button type="submit" class="btn share"><fmt:message key="page.trackInfo.share"/></button>
                     </form>
                 </div>
             </div>

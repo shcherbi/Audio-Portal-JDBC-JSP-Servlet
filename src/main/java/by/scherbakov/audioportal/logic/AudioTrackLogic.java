@@ -70,7 +70,7 @@ public class AudioTrackLogic {
         return audioTrackDAO.takeAll();
     }
 
-    public List<Comment> findAllCommentsById(int idTrack) {
+    public List<Comment> takeAllCommentsById(int idTrack) {
         List<Comment> comments = null;
         CommentDAO commentDAO = null;
         try {
@@ -84,5 +84,20 @@ public class AudioTrackLogic {
             LOGGER.error("Invalid id of audio track. idTrack=null or empty");
         }
         return comments;
+    }
+
+    public AudioTrack takeTrackByName(String name) {
+        AudioTrack audioTrack = null;
+        try {
+            if (name == null || name.isEmpty()) {
+                throw new LogicException();
+            }
+            AudioTrackDAO audioTrackDAO = new AudioTrackDAO();
+            audioTrack = audioTrackDAO.findAudioTrackByName(name);
+            LOGGER.log(Level.INFO, "Retrieved track by audio track name");
+        } catch (LogicException e) {
+            LOGGER.error("Invalid name of audio track. name=null or empty");
+        }
+        return audioTrack;
     }
 }

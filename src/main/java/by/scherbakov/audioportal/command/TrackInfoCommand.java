@@ -22,7 +22,7 @@ public class TrackInfoCommand implements ActionCommand {
         String page=null;
         String idTrack = requestContent.getReguestParameterValue(TRACK_ATTRIBUTE);
         AudioTrackLogic trackLogic = new AudioTrackLogic();
-        List<Comment> comments = trackLogic.findAllCommentsById(Integer.parseInt(idTrack));
+        List<Comment> comments = trackLogic.takeAllCommentsById(Integer.parseInt(idTrack));
         AudioTrack track = trackLogic.takeTrackById(idTrack);
         Album album = trackLogic.takeAlbumById(Integer.toString(track.getIdAlbum()));
         Genre genre = trackLogic.takeGenreById(Integer.toString(track.getIdGenre()));

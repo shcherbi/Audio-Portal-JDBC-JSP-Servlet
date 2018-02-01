@@ -66,7 +66,15 @@ a:hover {
     outline: none;
 }
 
-button.btn {
+button.btn.buy {
+    margin-top: -11%;
+}
+
+button.btn.find {
+    margin-top: -14% !important;
+}
+
+button.btn.share {
     margin-left: 85%;
     margin-top: 3%;
 }
@@ -105,13 +113,6 @@ audio {
     padding-bottom: 2%;
     padding-top: 2%;
 }
-
-button.btn.buy {
-    margin-top: -11%;
-}
-
-
-
 
 
 
