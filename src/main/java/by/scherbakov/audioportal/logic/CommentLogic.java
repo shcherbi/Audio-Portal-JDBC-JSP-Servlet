@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 public class CommentLogic {
     private static final Logger LOGGER = LogManager.getLogger(CommentLogic.class);
-    private static final String ERROR_ADD_MESSAGE="message.trackInfo.addError";
+    private static final String ERROR_ADD_MESSAGE="message.trackInfo.addCommentError";
 
     public String addComment(String login, int idTrack, String text,String date) {
         String message=null;

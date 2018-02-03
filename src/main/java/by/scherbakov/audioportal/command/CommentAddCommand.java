@@ -21,7 +21,7 @@ public class CommentAddCommand implements ActionCommand {
     private static final String LOCALE_ATTRIBUTE = "locale";
     private static final String MISTAKE_ATTRIBUTE = "mistakeComment";
     private static final String TRACK_PAGE = "/web?command=track_info&track=";
-    private static final String DATE_PATTERN = "y-MM-DD";
+    private static final String DATE_PATTERN = "YYYY-MM-dd";
 
     @Override
     public String execute(SessionRequestContent requestContent) {

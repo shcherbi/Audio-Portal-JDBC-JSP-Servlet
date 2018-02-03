@@ -47,6 +47,7 @@
                     <fmt:message key="page.main.buy"/>
                 </button>
             </form>
+            ${isOrdered}
             <br>
         </div>
     </div>

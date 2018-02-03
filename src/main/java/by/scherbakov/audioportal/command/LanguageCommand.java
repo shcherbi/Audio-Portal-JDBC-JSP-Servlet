@@ -9,7 +9,7 @@ public class LanguageCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
     private static final String SIGN_IN_VALUE = "true";
     private static final String LOGIN_PAGE = "path.page.login";
-    private static final String MAIN_PAGE = "path.page.main";
+    private static final String MAIN_PAGE = "/web?command=main";
 
 
     @Override
@@ -21,7 +21,7 @@ public class LanguageCommand implements ActionCommand {
         }
         String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
         if(SIGN_IN_VALUE.equalsIgnoreCase(isSignIn)){
-            page = ConfigurationManager.getProperty(MAIN_PAGE);
+            page = MAIN_PAGE;
         }else {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         }

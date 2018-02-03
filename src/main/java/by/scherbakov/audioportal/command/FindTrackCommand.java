@@ -1,15 +1,10 @@
 package by.scherbakov.audioportal.command;
 
 import by.scherbakov.audioportal.entity.AudioTrack;
-import by.scherbakov.audioportal.entity.User;
 import by.scherbakov.audioportal.logic.AudioTrackLogic;
-import by.scherbakov.audioportal.logic.CommentLogic;
-import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class FindTrackCommand implements ActionCommand {
     private static final String TRACK_NAME_ATTRIBUTE = "findText";
@@ -29,7 +24,8 @@ public class FindTrackCommand implements ActionCommand {
         if(audioTrack==null){
             String pageMessage = MessageManager.getMessage(FIND_TRACK_MESSAGE,
                     (String) requestContent.getSessionAttributeValue(LOCALE_ATTRIBUTE));
-            requestContent.setRequestAttributeValue(MISTAKE_ATTRIBUTE,trackName+SPACE+pageMessage);
+            String mistakeMessage = trackName+SPACE+pageMessage;
+            requestContent.setRequestAttributeValue(MISTAKE_ATTRIBUTE,mistakeMessage);
             page = MAIN_PAGE;
         }else{
             page = TRACK_PAGE+audioTrack.getId();

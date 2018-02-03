@@ -31,12 +31,11 @@
                 <br>
                 <b><fmt:message key="page.trackInfo.price"/>: </b><c:out value="${track.price}"/>
                 <br>
-                <form method="POST" action="${pageContext.request.contextPath}/web">
-                    <input type="hidden" name="command" value="order_list_remove">
+                <a href="${pageContext.request.contextPath}/web?command=order_list_remove">
                     <button type="submit" name="orderButton" class="btn">
                         X
                     </button>
-                </form>
+                </a>
             </div>
         </div>
         <br>
@@ -54,6 +53,28 @@
             <c:if test="${user.bonus ne null}">
                 <b><fmt:message key="page.preOrder.priceBonus"/>: </b> ${totalPriceBonus}
                 <br>
+            </c:if>
+            <c:if test="${!orderList.isEmpty()}">
+                <fmt:message key="page.preOrder.infoText"/>
+                <form method="POST" action="${pageContext.request.contextPath}/web">
+                    <input type="hidden" name="command" value="order"/>
+                    <div class="form-group">
+                        <br>
+                        <br>
+                        <input type="text" class="form-control" name="cardNumber" placeholder=<fmt:message
+                                key="page.preOrder.cardNumber"/>>
+                        <br>
+                        <br>
+                        <input type="text" class="form-control" name="svcCode" placeholder=<fmt:message
+                                key="page.preOrder.svcCode"/>>
+                        <br>
+                        <br>
+                    </div>
+                    <button type="submit" class="btn purchase"><fmt:message key="page.header.find"/></button>
+                </form>
+                <br>
+                <br>
+                ${purchaseRejected}
             </c:if>
         </div>
     </div>

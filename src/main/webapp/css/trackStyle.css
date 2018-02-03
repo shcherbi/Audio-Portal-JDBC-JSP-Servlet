@@ -68,14 +68,10 @@ a:hover {
 
 button.btn.buy {
     margin-top: -11%;
-}
-
-button.btn.find {
-    margin-top: -14% !important;
+    margin-left: 75%;
 }
 
 button.btn.share {
-    margin-left: 85%;
     margin-top: 3%;
 }
 
@@ -114,7 +110,10 @@ audio {
     padding-top: 2%;
 }
 
-
+input[type="text"]:focus{
+    border-color: #98CA5A;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(126, 239, 104, 0.6);
+}
 
 
 
