@@ -11,7 +11,7 @@ public class FindTrackCommand implements ActionCommand {
     private static final String LOCALE_ATTRIBUTE = "locale";
     private static final String MISTAKE_ATTRIBUTE = "mistakeSongName";
     private static final String TRACK_PAGE = "/web?command=track_info&track=";
-    private static final String MAIN_PAGE = "/web?command=main";
+    private static final String MAIN_PAGE_ACTION = "/web?command=main";
     private static final String FIND_TRACK_MESSAGE = "message.main.findError";
     private static final String SPACE = " ";
 
@@ -26,7 +26,7 @@ public class FindTrackCommand implements ActionCommand {
                     (String) requestContent.getSessionAttributeValue(LOCALE_ATTRIBUTE));
             String mistakeMessage = trackName+SPACE+pageMessage;
             requestContent.setRequestAttributeValue(MISTAKE_ATTRIBUTE,mistakeMessage);
-            page = MAIN_PAGE;
+            page = MAIN_PAGE_ACTION;
         }else{
             page = TRACK_PAGE+audioTrack.getId();
         }

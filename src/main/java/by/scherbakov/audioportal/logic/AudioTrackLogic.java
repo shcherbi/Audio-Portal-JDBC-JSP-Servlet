@@ -13,12 +13,13 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
 
 
 public class AudioTrackLogic {
     private static final Logger LOGGER = LogManager.getLogger(AudioTrackLogic.class);
+    private static final String ERROR_ADD_MESSAGE="message.main.trackAlreadyExist";
 
     public AudioTrack takeTrackById(String idTrack) {
         AudioTrack audioTrack = null;
@@ -100,4 +101,42 @@ public class AudioTrackLogic {
         }
         return audioTrack;
     }
+
+    public List<AudioTrack> takeOrderedTracks(String login) {
+        List<AudioTrack> audioTracks = null;
+        try{
+            if (login == null || login.isEmpty()) {
+                throw new LogicException();
+            }
+            AudioTrackDAO audioTrackDAO = new AudioTrackDAO();
+            audioTracks = audioTrackDAO.findOrderedTracksByLogin(login);
+            LOGGER.log(Level.INFO, "Retrieved track by audio track name");
+        } catch(LogicException e){
+            LOGGER.error("Invalid name of audio track. name=null or empty");
+        }
+        return audioTracks;
+    }
+
+    public String addTrack(String trackName, String artist, String albumName, String studio, String date,
+                           String genreName, BigDecimal price, String link, String imageLink){
+        String message = null;
+        try {
+            if(trackName==null||trackName.isEmpty()||artist==null||artist.isEmpty()||albumName==null||albumName.isEmpty()||
+                    studio==null||studio.isEmpty()||date==null||date.isEmpty()||genreName==null||genreName.isEmpty()||
+                    link==null||link.isEmpty()||imageLink==null||imageLink.isEmpty()){
+                throw new LogicException();
+            }
+            AudioTrackDAO audioTrackDAO = new AudioTrackDAO();
+            AlbumDAO albumDAO = new AlbumDAO();
+            GenreDAO genreDAO = new GenreDAO();
+            Album album = albumDAO.addAlbum(albumName,studio,date);
+            Genre genre = genreDAO.addGenre(genreName);
+            message = audioTrackDAO.addAudioTrack(trackName,artist,album.getId(),genre.getId(),price,link,imageLink)?"":ERROR_ADD_MESSAGE;
+            LOGGER.log(Level.INFO, "Add new audio track");
+        } catch (LogicException e) {
+            LOGGER.error("Invalid parameters.");
+        }
+        return message;
+    }
+
 }

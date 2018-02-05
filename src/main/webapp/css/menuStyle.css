@@ -1,0 +1,27 @@
+.navbar-fixed-left {
+    width: 140px !important;
+    position: fixed !important;
+    border-radius: 0 !important;
+    height: 100% !important;
+    background-color:black !important;;
+}
+
+.navbar-fixed-left .navbar-nav > li {
+    float: none !important;
+    width: 139px !important;
+}
+
+.navbar-fixed-left + .container {
+    padding-left: 160px !important;
+}
+
+.navbar-fixed-left .navbar-nav > li > .dropdown-menu {
+    margin-top: -50px !important;
+    margin-left: 140px !important;
+}
+li a:hover {
+    background-color: #98CA5A !important;
+}
+li a{
+    color: #98CA5A;
+}

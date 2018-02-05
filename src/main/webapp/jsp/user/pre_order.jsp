@@ -70,7 +70,7 @@
                         <br>
                         <br>
                     </div>
-                    <button type="submit" class="btn purchase"><fmt:message key="page.header.find"/></button>
+                    <button type="submit" class="btn purchase"><fmt:message key="page.preOrder.buy"/></button>
                 </form>
                 <br>
                 <br>

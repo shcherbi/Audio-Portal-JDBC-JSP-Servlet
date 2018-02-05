@@ -12,6 +12,7 @@ public class UserLogic {
     private static final Logger LOGGER = LogManager.getLogger(UserLogic.class);
 
     private static final String ROLE_CLIENT_VALUE = "client";
+    private static final String ERROR_ADD_MESSAGE="message.registration.userAlreadyExist";
 
     public User findUser(String login){
         User user = null;
@@ -28,8 +29,8 @@ public class UserLogic {
         return user;
     }
 
-    public void registerUser(String login,String password, String email,String role){
-        User user = null;
+    public String registerUser(String login,String password, String email,String role){
+        String message = null;
         try {
             if(login == null || login.isEmpty()||password==null||password.isEmpty()||email==null||email.isEmpty()){
                 throw new LogicException();
@@ -39,12 +40,13 @@ public class UserLogic {
             }
             String cryptedPassword = DigestUtils.md5Hex(password);
             UserDAO userDAO = new UserDAO();
-            userDAO.addUser(login,cryptedPassword,email,role,null);
+            message=userDAO.addUser(login,cryptedPassword,email,role,null)?"":ERROR_ADD_MESSAGE;
             LOGGER.log(Level.INFO, "User registered");
         }catch (LogicException e){
             LOGGER.error("Invalid login or password or email." +
                     " Login=null or login is empty or password=null or password is empty" +
                     "or email=null or email is empty");
         }
+        return message;
     }
 }

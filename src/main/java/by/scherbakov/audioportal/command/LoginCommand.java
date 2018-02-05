@@ -1,16 +1,15 @@
 package by.scherbakov.audioportal.command;
 
-        import by.scherbakov.audioportal.entity.User;
-        import by.scherbakov.audioportal.logic.LoginLogic;
-        import by.scherbakov.audioportal.logic.UserLogic;
-        import by.scherbakov.audioportal.manager.ConfigurationManager;
-        import by.scherbakov.audioportal.manager.MessageManager;
-        import by.scherbakov.audioportal.servlet.SessionRequestContent;
+import by.scherbakov.audioportal.entity.User;
+import by.scherbakov.audioportal.logic.LoginLogic;
+import by.scherbakov.audioportal.logic.UserLogic;
+import by.scherbakov.audioportal.manager.ConfigurationManager;
+import by.scherbakov.audioportal.manager.MessageManager;
+import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
 public class LoginCommand implements ActionCommand {
     private static final String NICKNAME_PARAMETER = "nickname";
     private static final String PASSWORD_PARAMETER = "password";
-    private static final String ROLE_ATTRIBUTE = "role";
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
     private static final String SIGN_IN_VALUE = "true";
     private static final String LOCALE_ATTRIBUTE = "locale";
@@ -30,8 +29,7 @@ public class LoginCommand implements ActionCommand {
             page = MAIN_PAGE_ACTION;
             UserLogic userLogic = new UserLogic();
             User user = userLogic.findUser(nickname);
-            requestContent.setSessionAttributeValue(ROLE_ATTRIBUTE, user.getRole());
-            requestContent.setSessionAttributeValue(SIGN_IN_ATTRIBUTE,SIGN_IN_VALUE);
+            requestContent.setSessionAttributeValue(SIGN_IN_ATTRIBUTE, SIGN_IN_VALUE);
             requestContent.setSessionAttributeValue(USER_ATTRIBUTE, user);
         } else {
             String pageMessage = MessageManager.getMessage(LOGIN_PASSWORD_MESSAGE,

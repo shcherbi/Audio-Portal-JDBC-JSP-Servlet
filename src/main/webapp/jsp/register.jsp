@@ -30,6 +30,7 @@
                 <br>
                 <button type="submit" name="registrationButton" class="btn"><fmt:message key="page.registration.signUp"/></button>
             </form>
+            ${userExist}
         </div>
     </div>
 </div>

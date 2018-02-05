@@ -1,5 +1,8 @@
 package by.scherbakov.audioportal.command;
 
+import by.scherbakov.audioportal.command.admin.AddTrackCommand;
+import by.scherbakov.audioportal.command.client.*;
+
 public enum CommandType {
     LOGIN(new LoginCommand()),
     LOGOUT(new LogoutCommand()),
@@ -12,7 +15,9 @@ public enum CommandType {
     ORDER_LIST_ADD(new OrderListAddCommand()),
     ORDER_LIST_REMOVE(new OrderListRemoveCommand()),
     PRE_ORDER(new PreOrderCommand()),
-    ORDER(new OrderCommand());
+    ORDER(new OrderCommand()),
+    ORDERED_TRACKS(new OrderedTrackCommand()),
+    ADD_AUDIO_TRACK(new AddTrackCommand());
 
     ActionCommand command;
 

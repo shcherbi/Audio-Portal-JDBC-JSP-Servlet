@@ -1,5 +1,6 @@
-package by.scherbakov.audioportal.command;
+package by.scherbakov.audioportal.command.client;
 
+import by.scherbakov.audioportal.command.ActionCommand;
 import by.scherbakov.audioportal.entity.AudioTrack;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;

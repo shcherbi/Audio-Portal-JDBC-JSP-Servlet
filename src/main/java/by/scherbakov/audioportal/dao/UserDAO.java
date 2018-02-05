@@ -202,7 +202,9 @@ public class UserDAO extends AbstractDAO<User> {
             statement.setString(3, email);
             statement.setString(4, role);
             statement.setString(5, bonus);
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isAdded = true;
+            }
             LOGGER.log(Level.INFO, "Added user to the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameters!", e);

@@ -8,7 +8,7 @@ import by.scherbakov.audioportal.servlet.SessionRequestContent;
 import java.util.List;
 
 public class MainCommand implements ActionCommand {
-    public static final String TRACKS_ATTRIBUTE = "tracks";
+    private static final String TRACKS_ATTRIBUTE = "tracks";
     private static final String MAIN_PAGE = "path.page.main";
 
     @Override

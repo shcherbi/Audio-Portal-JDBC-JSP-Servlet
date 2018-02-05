@@ -1,6 +1,7 @@
 package by.scherbakov.audioportal.dao;
 
 import by.scherbakov.audioportal.database.ConnectionPool;
+import by.scherbakov.audioportal.entity.Album;
 import by.scherbakov.audioportal.entity.Comment;
 import by.scherbakov.audioportal.entity.Genre;
 import by.scherbakov.audioportal.exception.CommonException;
@@ -8,10 +9,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +25,9 @@ public class GenreDAO extends AbstractDAO<Genre> {
     private static final String SQL_SELECT_ALL_GENRES = "SELECT idGenre, genre FROM genre";
     private static final String SQL_FIND_GENRE_BY_ID = "SELECT idGenre, genre FROM genre WHERE idGenre=?";
     private static final String SQL_UPDATE_GENRE = "UPDATE genre SET genre=? WHERE idGenre=?";
-    private static final String SQL_DELETE_GENRE = "DELETE idGenre, genre FROM genre WHERE idGenre=?";
+    private static final String SQL_DELETE_GENRE = "DELETE FROM genre WHERE idGenre=?";
+
+    private static final String SQL_ADD_GENRE = "INSERT INTO genre(genre) VALUES (?)";
 
     @Override
     public List<Genre> takeAll() {
@@ -133,5 +135,47 @@ public class GenreDAO extends AbstractDAO<Genre> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+    }
+
+    public Genre addGenre(String genreName) {
+        Genre genre=null;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        boolean isAdded = false;
+        try {
+            if (genreName == null||genreName.isEmpty()) {
+                throw new CommonException();
+            }
+            genre=checkAndGet(takeAll(),genreName);
+            if(genre==null){
+                connection = ConnectionPool.getInstance().takeConnection();
+                statement = connection.prepareStatement(SQL_ADD_GENRE, Statement.RETURN_GENERATED_KEYS);
+                statement.setString(1, genreName);
+                statement.executeUpdate();
+                ResultSet resultSet = statement.getGeneratedKeys();
+                resultSet.next();
+                genre = new Genre(resultSet.getInt(1),genreName);
+            }
+            LOGGER.log(Level.INFO, "Add genre to the database");
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameter.", e);
+        }catch(SQLException e) {
+            LOGGER.error("SQLException in trying to add genre", e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().closeConnection(connection);
+            }
+        }
+        return genre;
+    }
+
+    private Genre checkAndGet(List<Genre> genres, String genreName){
+        for (int i = 0; i<genres.size();i++){
+            String currentGenreName= genres.get(i).getGenre();
+            if(currentGenreName.equals(genreName)){
+                return genres.get(i);
+            }
+        }
+        return null;
     }
 }

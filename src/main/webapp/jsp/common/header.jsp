@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ctag" uri="customtag" %>
 <fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="properties.content"/>
 <jsp:useBean id="orderList" class="java.util.HashSet" scope="session"/>
@@ -20,18 +20,33 @@
             <button type="submit" class="btn find"><fmt:message key="page.header.find"/></button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-            <li><b class="allGreen">${orderList.size()}</b>
+            <li>
+                <b class="allGreen">${orderList.size()}</b>
             </li>
-            <li><a href="${pageContext.request.contextPath}/web?command=logout"><fmt:message key="page.header.logout"/></a></li>
+            <li>
+                <a href="${pageContext.request.contextPath}/jsp/user/account/account.jsp">${user.login}</a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/web?command=logout"><fmt:message key="page.header.logout"/></a>
+            </li>
         </ul>
         <div class="nav navbar-nav navbar-right">
             <div class="cart-brand">
-                <a href="${pageContext.request.contextPath}/web?command=pre_order">
+                <a href="${pageContext.request.contextPath}/jsp/user/account/account.jsp">
                     <img src="../../images/shoppingcartgreen.png" height="45px" width="55px">
                 </a>
             </div>
         </div>
     </div>
 </header>
+<ctag:AdminTag role="${user.role}">
+    <div class="navbar navbar-default navbar-fixed-top admin">
+    <div class="container admin-menu">
+        <a href="${pageContext.request.contextPath}/jsp/user/admin/add_track.jsp">
+            <button type="submit" class = "btn"><fmt:message key="page.main.new"/></button>
+        </a>
+    </div>
+    </div>
+</ctag:AdminTag>
 
 

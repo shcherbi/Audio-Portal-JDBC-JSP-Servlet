@@ -3,6 +3,14 @@
     margin-bottom: auto;
 }
 
+.navbar.navbar-default.navbar-fixed-top.admin {
+    margin-top: 3.6%;
+}
+
+.container.admin-menu{
+    margin-top: 0.5%;
+}
+
 .navbar-brand {
     margin-top: -12px !important;
 }
