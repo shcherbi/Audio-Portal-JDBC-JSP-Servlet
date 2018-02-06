@@ -103,7 +103,8 @@ public class OrderDAO extends AbstractDAO<Order> {
     }
 
     @Override
-    public void update(Order order) {
+    public boolean update(Order order) {
+        boolean isUpdated = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -117,7 +118,9 @@ public class OrderDAO extends AbstractDAO<Order> {
             statement.setString(3, order.getSVCCode());
             statement.setDate(4, (java.sql.Date) order.getDate());
             statement.setInt(5, order.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isUpdated = true;
+            }
             LOGGER.log(Level.INFO, "Updated order in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. order=null!", e);
@@ -128,10 +131,12 @@ public class OrderDAO extends AbstractDAO<Order> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(Order order) {
+    public boolean delete(Order order) {
+        boolean isDeleted = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -141,7 +146,9 @@ public class OrderDAO extends AbstractDAO<Order> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SQL_DELETE_ORDER);
             statement.setInt(1, order.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isDeleted = true;
+            }
             LOGGER.log(Level.INFO, "Deleted order in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. audioTrack=null!", e);
@@ -152,6 +159,7 @@ public class OrderDAO extends AbstractDAO<Order> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isDeleted;
     }
 
     public List<Integer> findIdTrackByLogin(String login) {

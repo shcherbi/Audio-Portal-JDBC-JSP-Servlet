@@ -1,6 +1,5 @@
 package by.scherbakov.audioportal.dao;
 
-import java.sql.Connection;
 import java.util.List;
 
 public abstract class AbstractDAO<T> {
@@ -8,7 +7,7 @@ public abstract class AbstractDAO<T> {
 
     public abstract T take(String id);
 
-    public abstract void update(T object);
+    public abstract boolean update(T object);
 
-    public abstract void delete(T object);
+    public abstract boolean delete(T object);
 }

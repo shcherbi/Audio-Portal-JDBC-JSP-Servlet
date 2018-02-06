@@ -9,14 +9,14 @@
     <link rel="icon" href="../../images/logogreen.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../css/registerStyle.css">
+    <link rel="stylesheet" href="../../css/registerStyle.css">
     <title><fmt:message key="page.addTrack.title"/></title>
 </head>
 <body>
 <div class="container text-center">
     <br><br>
     <a href="${pageContext.request.contextPath}/web?command=main">
-        <img src="../../../images/logogreen.png" height="90px" width="105px">
+        <img src="../../images/logogreen.png" height="90px" width="105px">
     </a>
     <br><br><br>
     <div class="row">
@@ -31,6 +31,9 @@
                 <br>
                 <input type="text" name="album" class="form-control"
                        placeholder="<fmt:message key="page.addTrack.album"/>">
+                <br>
+                <input type="text" name="studio" class="form-control"
+                       placeholder="<fmt:message key="page.addTrack.studio"/>">
                 <br>
                 <input type="text" name="date" class="form-control"
                        placeholder="<fmt:message key="page.addTrack.date"/>">
@@ -47,8 +50,9 @@
                 <input type="text" name="imageLink" class="form-control"
                        placeholder="<fmt:message key="page.addTrack.linkImage"/>">
                 <br>
-                <button type="submit" name="registrationButton" class="btn"><fmt:message
-                        key="page.addTrack.add"/></button>
+                <button type="submit" name="addTrackButton" class="btn">
+                    <fmt:message key="page.addTrack.add"/>
+                </button>
             </form>
         </div>
     </div>

@@ -99,7 +99,8 @@ public class CommentDAO extends AbstractDAO<Comment> {
     }
 
     @Override
-    public void update(Comment comment) {
+    public boolean update(Comment comment) {
+        boolean isUpdated = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -113,7 +114,9 @@ public class CommentDAO extends AbstractDAO<Comment> {
             statement.setString(3, comment.getText());
             statement.setDate(4, (java.sql.Date) comment.getDate());
             statement.setInt(5, comment.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isUpdated = true;
+            }
             LOGGER.log(Level.INFO, "Updated comment in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. comment=null!", e);
@@ -124,10 +127,12 @@ public class CommentDAO extends AbstractDAO<Comment> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(Comment comment) {
+    public boolean delete(Comment comment) {
+        boolean isDeleted = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -137,7 +142,9 @@ public class CommentDAO extends AbstractDAO<Comment> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SQL_DELETE_COMMENT);
             statement.setInt(1, comment.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isDeleted = true;
+            }
             LOGGER.log(Level.INFO, "Deleted comment in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. comment=null!", e);
@@ -148,6 +155,7 @@ public class CommentDAO extends AbstractDAO<Comment> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isDeleted;
     }
 
     public List<Comment> findByTrackId(int idTrack) {

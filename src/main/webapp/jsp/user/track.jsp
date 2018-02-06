@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="сtag" uri="customtag" %>
 <fmt:setLocale value="${locale}" scope="session"/>
 <fmt:setBundle basename="properties.content"/>
 <html>
@@ -21,22 +22,98 @@
     <div class="row">
         <div class="col-xs-5 text-center">
             <img src="${track.imagePath}">
+            <br>
+            <сtag:AdminTag role="${user.role}">
+                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_image_link">
+                    <input type="text" name="imageLink" class="form-control"
+                           placeholder="<fmt:message key="page.addTrack.linkImage"/>">
+                    <button type="submit" name="changeImageLinkButton" class="btn change">
+                        <fmt:message key="page.trackInfo.change"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
         </div>
         <div class="col-xs-7">
             <b><fmt:message key="page.trackInfo.artist"/>: </b><c:out value="${track.artist}"/>
             <br>
-            <b><fmt:message key="page.trackInfo.song"/>: </b> <c:out value="${track.name}"/>
+            <сtag:AdminTag role="${user.role}">
+                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_artist">
+                    <input type="text" name="artist" class="form-control"
+                           placeholder="<fmt:message key="page.trackInfo.artist"/>">
+                    <button type="submit" name="changeArtistButton" class="btn change">
+                        <fmt:message key="page.trackInfo.change"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
+            <b><fmt:message key="page.trackInfo.song"/>: </b><c:out value="${track.name}"/>
             <br>
+            <сtag:AdminTag role="${user.role}">
+                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_track_name">
+                    <input type="text" name="name" class="form-control"
+                           placeholder="<fmt:message key="page.trackInfo.song"/>">
+                    <button type="submit" name="changeSongNameButton" class="btn change">
+                        <fmt:message key="page.trackInfo.change"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
             <b><fmt:message key="page.trackInfo.album"/>: </b><c:out value="${album.albumName}"/>
             <br>
             <b><fmt:message key="page.trackInfo.studio"/>: </b><c:out value="${album.studio}"/>
             <br>
             <b><fmt:message key="page.trackInfo.date"/>: </b><c:out value="${album.date}"/>
             <br>
+            <сtag:AdminTag role="${user.role}">
+                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_album">
+                    <input type="text" name="album" class="form-control"
+                           placeholder="<fmt:message key="page.trackInfo.album"/>">
+                    <input type="text" name="studio" class="form-control"
+                           placeholder="<fmt:message key="page.trackInfo.studio"/>">
+                    <input type="text" name="date" class="form-control"
+                           placeholder="<fmt:message key="page.trackInfo.date"/>">
+                    <button type="submit" name="changeAlbumButton" class="btn change">
+                        <fmt:message key="page.trackInfo.change"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
             <b><fmt:message key="page.trackInfo.genre"/>: </b><c:out value="${genre.genre}"/>
             <br>
+            <сtag:AdminTag role="${user.role}">
+                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_genre">
+                    <input type="text" name="genre" class="form-control"
+                           placeholder="<fmt:message key="page.trackInfo.genre"/>">
+                    <button type="submit" name="changeGenreButton" class="btn change">
+                        <fmt:message key="page.trackInfo.change"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
             <b><fmt:message key="page.trackInfo.price"/>: </b><c:out value="${track.price}"/>
             <br>
+            <сtag:AdminTag role="${user.role}">
+                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_price">
+                    <input type="text" name="price" class="form-control"
+                           placeholder="<fmt:message key="page.trackInfo.price"/>">
+                    <button type="submit" name="changePriceButton" class="btn change">
+                        <fmt:message key="page.trackInfo.change"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
+            <br>
+            <сtag:AdminTag role="${user.role}">
+                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_link">
+                    <input type="text" name="link" class="form-control"
+                           placeholder="<fmt:message key="page.addTrack.link"/>">
+                    <button type="submit" name="changeLinkButton" class="btn change">
+                        <fmt:message key="page.trackInfo.change"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
             <br><br>
             <audio controls controlsList="nodownload" preload="none">
                 <source src="${track.linkPath}" type="audio/mpeg"/>
@@ -48,6 +125,7 @@
                 </button>
             </form>
             ${isOrdered}
+            ${updateAudioTrackError}
             <br>
         </div>
     </div>

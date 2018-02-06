@@ -32,7 +32,7 @@
         </ul>
         <div class="nav navbar-nav navbar-right">
             <div class="cart-brand">
-                <a href="${pageContext.request.contextPath}/jsp/user/account/account.jsp">
+                <a href="${pageContext.request.contextPath}/web?command=pre_order">
                     <img src="../../images/shoppingcartgreen.png" height="45px" width="55px">
                 </a>
             </div>
@@ -42,11 +42,22 @@
 <ctag:AdminTag role="${user.role}">
     <div class="navbar navbar-default navbar-fixed-top admin">
     <div class="container admin-menu">
-        <a href="${pageContext.request.contextPath}/jsp/user/admin/add_track.jsp">
-            <button type="submit" class = "btn"><fmt:message key="page.main.new"/></button>
+        <a href="${pageContext.request.contextPath}/jsp/admin/add_track.jsp">
+            <button type="submit" class = "btn"><fmt:message key="page.main.newTrack"/></button>
+        </a>
+        <a href="${pageContext.request.contextPath}/jsp/admin/add_album.jsp">
+            <button type="submit" class = "btn"><fmt:message key="page.main.newAlbum"/></button>
+        </a>
+        <a href="${pageContext.request.contextPath}/jsp/admin/add_genre.jsp">
+            <button type="submit" class = "btn"><fmt:message key="page.main.newGenre"/></button>
+        </a>
+        <a href="${pageContext.request.contextPath}/web?command=all_clients">
+            <button type="submit" class = "btn"><fmt:message key="page.main.clients"/></button>
         </a>
     </div>
     </div>
+    <br>
+    <br>
 </ctag:AdminTag>
 
 

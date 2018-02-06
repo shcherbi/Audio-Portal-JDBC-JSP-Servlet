@@ -99,7 +99,8 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
     }
 
     @Override
-    public void update(AudioTrack audioTrack) {
+    public boolean update(AudioTrack audioTrack) {
+        boolean isUpdated = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -116,7 +117,9 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
             statement.setString(6, audioTrack.getLinkPath());
             statement.setString(7, audioTrack.getImagePath());
             statement.setInt(8, audioTrack.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isUpdated = true;
+            }
             LOGGER.log(Level.INFO, "Updated audio track in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. audioTrack=null!", e);
@@ -127,10 +130,12 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(AudioTrack audioTrack) {
+    public boolean delete(AudioTrack audioTrack) {
+        boolean isDeleted = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -140,7 +145,9 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SQL_DELETE_AUDIO_TRACK);
             statement.setInt(1, audioTrack.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isDeleted = true;
+            }
             LOGGER.log(Level.INFO, "Deleted audio track in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. audioTrack=null!", e);
@@ -151,6 +158,7 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isDeleted;
     }
 
     public AudioTrack findAudioTrackByName(String trackName) {

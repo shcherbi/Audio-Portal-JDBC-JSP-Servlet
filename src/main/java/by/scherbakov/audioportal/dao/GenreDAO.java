@@ -89,7 +89,8 @@ public class GenreDAO extends AbstractDAO<Genre> {
     }
 
     @Override
-    public void update(Genre genre) {
+    public boolean update(Genre genre) {
+        boolean isUpdated = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -100,7 +101,9 @@ public class GenreDAO extends AbstractDAO<Genre> {
             statement = connection.prepareStatement(SQL_UPDATE_GENRE);
             statement.setString(1, genre.getGenre());
             statement.setInt(2, genre.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isUpdated = true;
+            }
             LOGGER.log(Level.INFO, "Updated genre in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. genre=null!", e);
@@ -111,10 +114,12 @@ public class GenreDAO extends AbstractDAO<Genre> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(Genre genre) {
+    public boolean delete(Genre genre) {
+        boolean isDeleted = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -124,7 +129,9 @@ public class GenreDAO extends AbstractDAO<Genre> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SQL_DELETE_GENRE);
             statement.setInt(1, genre.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isDeleted = true;
+            }
             LOGGER.log(Level.INFO, "Deleted genre in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. genre=null!", e);
@@ -135,6 +142,7 @@ public class GenreDAO extends AbstractDAO<Genre> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isDeleted;
     }
 
     public Genre addGenre(String genreName) {

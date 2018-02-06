@@ -1,5 +1,7 @@
 package by.scherbakov.audioportal.filter;
 
+import by.scherbakov.audioportal.entity.User;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
@@ -7,29 +9,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter (filterName = "LoginFilter",
+@WebFilter(filterName = "AdminFilter",
         initParams = @WebInitParam(name = "indexPath", value = "/index.jsp"))
-public class LoginFilter implements Filter {
+public class AdminFilter implements Filter {
     private static final String INDEX_PATH_PARAMETER = "indexPath";
-    private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
-    private static final String TRUE = "true";
+    private static final String USER_ATTRIBUTE = "user";
+    private static final String ADMIN_ROLE = "admin";
 
     private String indexPath;
 
     @Override
     public void init(FilterConfig filterConfig) {
-        indexPath=filterConfig.getInitParameter(INDEX_PATH_PARAMETER);
+        indexPath = filterConfig.getInitParameter(INDEX_PATH_PARAMETER);
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String isSignIn = (String) request.getSession().getAttribute(SIGN_IN_ATTRIBUTE);
-        if(!TRUE.equalsIgnoreCase(isSignIn)){
-            response.sendRedirect(request.getContextPath()+indexPath);
+        User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
+        if (!ADMIN_ROLE.equals(user.getRole())) {
+            response.sendRedirect(request.getContextPath() + indexPath);
         }
-        filterChain.doFilter(servletRequest,servletResponse);
+        filterChain.doFilter(request, response);
     }
 
     @Override

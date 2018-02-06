@@ -27,23 +27,13 @@ public class UserDAO extends AbstractDAO<User> {
     private static final String SQL_SELECT_ALL_USERS = "SELECT login, password, email, role, bonus FROM user ORDER BY login";
     private static final String SQL_FIND_USER_BY_LOGIN = "SELECT login, password, email, role, bonus FROM user WHERE login=?";
     private static final String SQL_UPDATE_USER = "UPDATE user SET password=?, email=?, role=?,bonus=? WHERE login=?";
-    private static final String SQL_DELETE_USER = "DELETE login, password, email, role, bonus FROM user WHERE login=?";
-    private static final String SQL_ADD_USER = "INSERT INTO user(login, password, email, role, bonus) VALUES(?,?,?,?,?)";
+    private static final String SQL_DELETE_USER = "DELETE FROM user WHERE login=?";
 
-   /* private static final String SQL_FIND_PASSWORD_BY_LOGIN = "SELECT password FROM users WHERE nickname=?";
-    private static final String SQL_ADD_USER_WITHOUT_CARD = "INSERT INTO users(nickname,password, email) VALUES(?,?,?)";
-    private static final String SQL_FIND_USER_BY_EMAIL = "SELECT id, nickname, password, status, money, bonus, card_number, email FROM  users WHERE email=?";
-    private static final String SQL_FIND_USER_BY_CARD = "SELECT id, nickname, password, status, money, bonus, card_number, email FROM  users WHERE card_number=?";
-    private static final String SQL_CHANGE_LOGIN = "UPDATE users SET nickname=? WHERE id=?";
-    private static final String SQL_CHANGE_EMAIL = "UPDATE users SET email=? WHERE id=?";
-    private static final String SQL_CHANGE_CARD = "UPDATE users SET card_number=? WHERE id=?";
-    private static final String SQL_CHANGE_PASSWORD = "UPDATE users SET password=? WHERE id=?";
-    private static final String SQL_CHANGE_MONEY = "UPDATE users SET money=? WHERE id=?";
-    private static final String SQL_COMMENTS_NUMBER_BY_ID = "SELECT count(*) FROM comments WHERE user_id=?";
-    private static final String SQL_SET_BONUS_BY_NICKNAME = "UPDATE users SET bonus=? WHERE nickname=?";
-    private static final String SQL_FIND_BONUS = "SELECT bonus FROM users WHERE nickname=?";
-    private static final String SQL_FIND_BONUS_BY_ID = "SELECT bonus FROM users WHERE id=?";
-    private static final String SQL_FIND_MONEY_BY_ID = "SELECT money FROM users WHERE id=?";*/
+    private static final String SQL_ADD_USER = "INSERT INTO user(login, password, email, role, bonus) VALUES(?,?,?,?,?)";
+    private static final String SQL_CHANGE_LOGIN = "UPDATE user SET login=? WHERE login=?";
+    private static final String SQL_CHANGE_PASSWORD= "UPDATE user SET password=? WHERE login=?";
+    private static final String SQL_CHANGE_EMAIL= "UPDATE user SET email=? WHERE login=?";
+    private static final String SQL_SELECT_ALL_CLIENTS= "SELECT login, password, email, role, bonus FROM user WHERE role='client' ORDER BY login";
 
     @Override
     public List<User> takeAll() {
@@ -108,7 +98,8 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public void update(User user) {
+    public boolean update(User user) {
+        boolean isUpdated = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -122,7 +113,9 @@ public class UserDAO extends AbstractDAO<User> {
             statement.setString(3, user.getRole());
             statement.setString(4, user.getBonus());
             statement.setString(5, user.getLogin());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isUpdated = true;
+            }
             LOGGER.log(Level.INFO, "Updated user in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. User=null!", e);
@@ -133,10 +126,12 @@ public class UserDAO extends AbstractDAO<User> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(User user) {
+    public boolean delete(User user) {
+        boolean isDeleted = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -146,7 +141,9 @@ public class UserDAO extends AbstractDAO<User> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SQL_DELETE_USER);
             statement.setString(1, user.getLogin());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isDeleted = true;
+            }
             LOGGER.log(Level.INFO, "Deleted user in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. User=null!", e);
@@ -157,6 +154,7 @@ public class UserDAO extends AbstractDAO<User> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isDeleted;
     }
 
     public String findPasswordByLogin(String login) {
@@ -216,5 +214,116 @@ public class UserDAO extends AbstractDAO<User> {
             }
         }
         return isAdded;
+    }
+
+    public boolean updateLogin(String login,String newLogin){
+        boolean isAdded = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            if (login == null||login.isEmpty()) {
+                throw new CommonException();
+            }
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SQL_CHANGE_LOGIN);
+            statement.setString(1, newLogin);
+            statement.setString(2, login);
+            if(statement.executeUpdate()!=0){
+                isAdded = true;
+            }
+            LOGGER.log(Level.INFO, "Updated login in the database");
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameters!", e);
+        } catch (SQLException e) {
+            LOGGER.error("SQLException in trying to update login", e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().closeConnection(connection);
+            }
+        }
+        return isAdded;
+    }
+    public boolean updatePassword(String login,String password){
+        boolean isAdded = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            if (login == null||login.isEmpty()) {
+                throw new CommonException();
+            }
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SQL_CHANGE_PASSWORD);
+            statement.setString(1, password);
+            statement.setString(2, login);
+            if(statement.executeUpdate()!=0){
+                isAdded = true;
+            }
+            LOGGER.log(Level.INFO, "Updated password in the database");
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameters!", e);
+        } catch (SQLException e) {
+            LOGGER.error("SQLException in trying to update password", e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().closeConnection(connection);
+            }
+        }
+        return isAdded;
+    }
+
+    public boolean updateEmail(String login,String email){
+        boolean isAdded = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            if (login == null||login.isEmpty()) {
+                throw new CommonException();
+            }
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SQL_CHANGE_EMAIL);
+            statement.setString(1, email);
+            statement.setString(2, login);
+            if(statement.executeUpdate()!=0){
+                isAdded = true;
+            }
+            LOGGER.log(Level.INFO, "Updated email in the database");
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameters!", e);
+        } catch (SQLException e) {
+            LOGGER.error("SQLException in trying to update email", e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().closeConnection(connection);
+            }
+        }
+        return isAdded;
+    }
+
+    public List<User> takeAllClients() {
+        List<User> users = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SQL_SELECT_ALL_CLIENTS);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String login = resultSet.getString(LOGIN);
+                String password = resultSet.getString(PASSWORD);
+                String email = resultSet.getString(EMAIL);
+                String role = resultSet.getString(ROLE);
+                String bonus = resultSet.getString(BONUS);
+                User user = new User(login, password, email, role, bonus);
+                users.add(user);
+            }
+            LOGGER.log(Level.INFO, "Received all clients from the database");
+        } catch (SQLException e) {
+            LOGGER.error("SQLException in trying to take all clients", e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().closeConnection(connection);
+            }
+        }
+        return users;
     }
 }

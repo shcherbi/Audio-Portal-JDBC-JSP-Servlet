@@ -33,6 +33,42 @@
             </c:if>
         </div>
     </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-4">
+            <form method="POST" action="${pageContext.request.contextPath}/web?command=change_login">
+                <input type="text" name="nickname" class="form-control" placeholder="<fmt:message key="page.account.newLogin"/>">
+                <br>
+                <br>
+                <button type="submit" name="changeLogin" class="btn">
+                    <fmt:message key="page.account.change"/>
+                </button>
+            </form>
+            ${changeLoginError}
+        </div>
+        <div class="col-sm-4">
+            <form method="POST" action="${pageContext.request.contextPath}/web?command=change_email">
+                <input type="text" name="email" class="form-control" placeholder="<fmt:message key="page.account.newEmail"/>">
+                <br>
+                <br>
+                <button type="submit" name="changeEmail" class="btn">
+                    <fmt:message key="page.account.change"/>
+                </button>
+            </form>
+            ${changeEmailError}
+        </div>
+        <div class="col-sm-4">
+            <form method="POST" action="${pageContext.request.contextPath}/web?command=change_password">
+                <input type="text" name="password" class="form-control" placeholder="<fmt:message key="page.account.newPassword"/>">
+                <br>
+                <br>
+                <button type="submit" name="changePassword" class="btn">
+                    <fmt:message key="page.account.change"/>
+                </button>
+            </form>
+            ${changePasswordError}
+        </div>
+    </div>
 </div>
 </body>
 </html>

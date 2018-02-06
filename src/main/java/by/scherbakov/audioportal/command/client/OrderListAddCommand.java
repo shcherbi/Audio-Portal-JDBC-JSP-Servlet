@@ -15,7 +15,7 @@ public class OrderListAddCommand implements ActionCommand {
     private static final String ORDER_LIST_ATTRIBUTE = "orderList";
     private static final String TRACK_ATTRIBUTE = "track";
     private static final String USER_ATTRIBUTE = "user";
-    private static final String LOCALE_ATTRIBUTE = "local";
+    private static final String LOCALE_ATTRIBUTE = "locale";
     private static final String IS_ORDERED_ATTRIBUTE = "isOrdered";
     private static final String TRACK_PAGE = "/web?command=track_info&track=";
     private static final String ADD_ORDER_MESSAGE = "message.trackInfo.addOrderListError";

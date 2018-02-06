@@ -94,7 +94,8 @@ public class AlbumDAO extends AbstractDAO<Album> {
     }
 
     @Override
-    public void update(Album album) {
+    public boolean update(Album album) {
+        boolean isUpdated = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -107,7 +108,9 @@ public class AlbumDAO extends AbstractDAO<Album> {
             statement.setString(2, album.getStudio());
             statement.setDate(3, (java.sql.Date) album.getDate());
             statement.setInt(4, album.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isUpdated = true;
+            }
             LOGGER.log(Level.INFO, "Updated album in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. Album=null!", e);
@@ -118,10 +121,12 @@ public class AlbumDAO extends AbstractDAO<Album> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isUpdated;
     }
 
     @Override
-    public void delete(Album album) {
+    public boolean delete(Album album) {
+        boolean isDeleted = false;
         Connection connection = null;
         PreparedStatement statement = null;
         try {
@@ -131,7 +136,9 @@ public class AlbumDAO extends AbstractDAO<Album> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SQL_DELETE_ALBUM);
             statement.setInt(1, album.getId());
-            statement.executeUpdate();
+            if(statement.executeUpdate()!=0){
+                isDeleted = true;
+            }
             LOGGER.log(Level.INFO, "Deleted album in the database");
         } catch (CommonException e) {
             LOGGER.error("Invalid parameter. Album=null!", e);
@@ -142,6 +149,7 @@ public class AlbumDAO extends AbstractDAO<Album> {
                 ConnectionPool.getInstance().closeConnection(connection);
             }
         }
+        return isDeleted;
     }
 
     public Album addAlbum(String albumName, String studio, String date) {
@@ -187,7 +195,7 @@ public class AlbumDAO extends AbstractDAO<Album> {
             String currentStudio = albums.get(i).getStudio();
             Date currentDate = albums.get(i).getDate();
             SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
-            String formatDate = format.format(date);
+            String formatDate = format.format(currentDate);
             if(currentAlbumName.equals(albumName)&& currentStudio.equals(studio)&&formatDate.equals(date)){
                 return albums.get(i);
             }

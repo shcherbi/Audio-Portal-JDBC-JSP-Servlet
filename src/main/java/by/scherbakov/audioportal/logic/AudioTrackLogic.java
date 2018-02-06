@@ -19,7 +19,8 @@ import java.util.List;
 
 public class AudioTrackLogic {
     private static final Logger LOGGER = LogManager.getLogger(AudioTrackLogic.class);
-    private static final String ERROR_ADD_MESSAGE="message.main.trackAlreadyExist";
+    private static final String ERROR_ADD_MESSAGE = "message.main.trackAlreadyExist";
+    private static final String ERROR_UPDATE_TRACK_MESSAGE ="message.trackInfo.trackUpdateError";
 
     public AudioTrack takeTrackById(String idTrack) {
         AudioTrack audioTrack = null;
@@ -131,7 +132,8 @@ public class AudioTrackLogic {
             GenreDAO genreDAO = new GenreDAO();
             Album album = albumDAO.addAlbum(albumName,studio,date);
             Genre genre = genreDAO.addGenre(genreName);
-            message = audioTrackDAO.addAudioTrack(trackName,artist,album.getId(),genre.getId(),price,link,imageLink)?"":ERROR_ADD_MESSAGE;
+            message = audioTrackDAO.addAudioTrack(trackName,artist,album.getId(),
+                    genre.getId(),price,link,imageLink)?"":ERROR_ADD_MESSAGE;
             LOGGER.log(Level.INFO, "Add new audio track");
         } catch (LogicException e) {
             LOGGER.error("Invalid parameters.");
@@ -139,4 +141,18 @@ public class AudioTrackLogic {
         return message;
     }
 
+    public String updateAudioTrack(AudioTrack audioTrack){
+        String message = null;
+        try {
+            if(audioTrack==null){
+                throw new LogicException();
+            }
+            AudioTrackDAO audioTrackDAO = new AudioTrackDAO();
+            message = audioTrackDAO.update(audioTrack)?"":ERROR_UPDATE_TRACK_MESSAGE;
+            LOGGER.log(Level.INFO, "Audio track is up to date");
+        } catch (LogicException e) {
+            LOGGER.error("Invalid parameter.");
+        }
+        return message;
+    }
 }
