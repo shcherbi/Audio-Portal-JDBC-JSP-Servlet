@@ -18,7 +18,7 @@ public class GenreLogic {
                 throw new LogicException();
             }
             GenreDAO genreDAO = new GenreDAO();
-            Genre genre = genreDAO.addGenre(genreName);
+            Genre genre = genreDAO.addGenre(genreName.trim());
             if(genre == null){
                 return false;
             }
@@ -36,7 +36,7 @@ public class GenreLogic {
                 throw new LogicException();
             }
             GenreDAO genreDAO = new GenreDAO();
-            genre = genreDAO.addGenre(genreName);
+            genre = genreDAO.addGenre(genreName.trim());
             LOGGER.log(Level.INFO, "Genre is up to date ");
         } catch (LogicException e) {
             LOGGER.error("Invalid parameter.");

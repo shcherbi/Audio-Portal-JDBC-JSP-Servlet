@@ -31,8 +31,8 @@
                 <br>
                 <b><fmt:message key="page.trackInfo.price"/>: </b><c:out value="${track.price}"/>
                 <br>
-                <a href="${pageContext.request.contextPath}/web?command=order_list_remove">
-                    <button type="submit" name="orderButton" class="btn">
+                <a href="${pageContext.request.contextPath}/web?command=order_list_remove?track=${track.id}">
+                    <button type="submit" name="cancelOrderButton" class="btn">
                         X
                     </button>
                 </a>

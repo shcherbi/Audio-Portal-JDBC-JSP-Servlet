@@ -16,7 +16,7 @@ public class AlbumLogic {
                 throw new LogicException();
             }
             AlbumDAO albumDAO = new AlbumDAO();
-            Album album = albumDAO.addAlbum(albumName,studio,date);
+            Album album = albumDAO.addAlbum(albumName.trim(),studio.trim(),date.trim());
             if(album == null){
                 return false;
             }
@@ -34,7 +34,7 @@ public class AlbumLogic {
                 throw new LogicException();
             }
             AlbumDAO albumDAO = new AlbumDAO();
-            album = albumDAO.addAlbum(albumName,studio,date);
+            album = albumDAO.addAlbum(albumName.trim(),studio.trim(),date.trim());
             LOGGER.log(Level.INFO, "Album is up to date ");
         } catch (LogicException e) {
             LOGGER.error("Invalid parameters.");

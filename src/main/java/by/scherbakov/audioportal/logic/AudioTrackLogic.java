@@ -21,6 +21,7 @@ public class AudioTrackLogic {
     private static final Logger LOGGER = LogManager.getLogger(AudioTrackLogic.class);
     private static final String ERROR_ADD_MESSAGE = "message.main.trackAlreadyExist";
     private static final String ERROR_UPDATE_TRACK_MESSAGE ="message.trackInfo.trackUpdateError";
+    private static final String ERROR_DELETE_TRACK_MESSAGE ="message.trackInfo.trackDeleteError";
 
     public AudioTrack takeTrackById(String idTrack) {
         AudioTrack audioTrack = null;
@@ -132,11 +133,12 @@ public class AudioTrackLogic {
             GenreDAO genreDAO = new GenreDAO();
             Album album = albumDAO.addAlbum(albumName,studio,date);
             Genre genre = genreDAO.addGenre(genreName);
-            message = audioTrackDAO.addAudioTrack(trackName,artist,album.getId(),
-                    genre.getId(),price,link,imageLink)?"":ERROR_ADD_MESSAGE;
+            message = audioTrackDAO.addAudioTrack(trackName.trim(),artist.trim(),album.getId(),
+                    genre.getId(),price,link.trim(),imageLink.trim())?"":ERROR_ADD_MESSAGE;
             LOGGER.log(Level.INFO, "Add new audio track");
         } catch (LogicException e) {
             LOGGER.error("Invalid parameters.");
+            message = ERROR_ADD_MESSAGE;
         }
         return message;
     }
@@ -152,6 +154,23 @@ public class AudioTrackLogic {
             LOGGER.log(Level.INFO, "Audio track is up to date");
         } catch (LogicException e) {
             LOGGER.error("Invalid parameter.");
+            message=ERROR_UPDATE_TRACK_MESSAGE;
+        }
+        return message;
+    }
+
+    public String deleteAudioTrack(AudioTrack audioTrack){
+        String message = null;
+        try {
+            if(audioTrack==null){
+                throw new LogicException();
+            }
+            AudioTrackDAO audioTrackDAO = new AudioTrackDAO();
+            message = audioTrackDAO.delete(audioTrack)?"":ERROR_DELETE_TRACK_MESSAGE;
+            LOGGER.log(Level.INFO, "Audio track is deleted");
+        } catch (LogicException e) {
+            LOGGER.error("Invalid parameter.");
+            message=ERROR_DELETE_TRACK_MESSAGE;
         }
         return message;
     }

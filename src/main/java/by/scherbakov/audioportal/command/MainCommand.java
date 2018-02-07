@@ -8,17 +8,25 @@ import by.scherbakov.audioportal.servlet.SessionRequestContent;
 import java.util.List;
 
 public class MainCommand implements ActionCommand {
+    private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
+    private static final String SIGN_IN_VALUE = "true";
+    private static final String LOGIN_PAGE = "path.page.login";
     private static final String TRACKS_ATTRIBUTE = "tracks";
     private static final String MAIN_PAGE = "path.page.main";
 
     @Override
     public String execute(SessionRequestContent requestContent) {
         String page = null;
-        List<AudioTrack> tracks;
-        AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
-        tracks = audioTrackLogic.takeAllTrack();
-        requestContent.setRequestAttributeValue(TRACKS_ATTRIBUTE, tracks);
-        page = ConfigurationManager.getProperty(MAIN_PAGE);
+        String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
+        if(SIGN_IN_VALUE.equals(isSignIn)) {
+            List<AudioTrack> tracks;
+            AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
+            tracks = audioTrackLogic.takeAllTrack();
+            requestContent.setRequestAttributeValue(TRACKS_ATTRIBUTE, tracks);
+            page = ConfigurationManager.getProperty(MAIN_PAGE);
+        }else {
+            page = ConfigurationManager.getProperty(LOGIN_PAGE);
+        }
         return page;
     }
 }

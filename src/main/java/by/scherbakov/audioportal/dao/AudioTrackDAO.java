@@ -116,7 +116,6 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
             statement.setBigDecimal(5, audioTrack.getPrice());
             statement.setString(6, audioTrack.getLinkPath());
             statement.setString(7, audioTrack.getImagePath());
-            statement.setInt(8, audioTrack.getId());
             if(statement.executeUpdate()!=0){
                 isUpdated = true;
             }
@@ -268,7 +267,6 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
                 statement.setBigDecimal(5, price);
                 statement.setString(6, link);
                 statement.setString(7, imageLink);
-                statement.executeUpdate();
                 if(statement.executeUpdate()!=0){
                     isAdded = true;
                 }

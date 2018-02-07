@@ -57,6 +57,7 @@ public class UserLogic {
             LOGGER.error("Invalid login or password or email." +
                     " Login=null or login is empty or password=null or password is empty" +
                     "or email=null or email is empty");
+            message=ERROR_ADD_MESSAGE;
         }
         return message;
     }
@@ -72,6 +73,7 @@ public class UserLogic {
             LOGGER.log(Level.INFO, "Login changed");
         }catch (LogicException e){
             LOGGER.error("Invalid login.");
+            message=ERROR_CHANGE_LOGIN;
         }
         return message;
     }
@@ -88,6 +90,7 @@ public class UserLogic {
             LOGGER.log(Level.INFO, "Password changed");
         }catch (LogicException e){
             LOGGER.error("Invalid password.");
+            message=ERROR_CHANGE_PASSWORD;
         }
         return message;
     }
@@ -103,6 +106,7 @@ public class UserLogic {
             LOGGER.log(Level.INFO, "Password changed");
         }catch (LogicException e){
             LOGGER.error("Invalid password.");
+            message=ERROR_CHANGE_EMAIL;
         }
         return message;
     }
@@ -125,6 +129,7 @@ public class UserLogic {
             LOGGER.log(Level.INFO, "Password changed");
         }catch (LogicException e){
             LOGGER.error("Invalid password.");
+            message=ERROR_CHANGE_ROLE;
         }
         return message;
     }
@@ -142,6 +147,7 @@ public class UserLogic {
             LOGGER.log(Level.INFO, "Password changed");
         }catch (LogicException e){
             LOGGER.error("Invalid password.");
+            message=ERROR_SET_BONUS;
         }
         return message;
     }
@@ -158,6 +164,7 @@ public class UserLogic {
             LOGGER.log(Level.INFO, "Password changed");
         }catch (LogicException e){
             LOGGER.error("Invalid password.");
+            message=ERROR_DELETE_USER;
         }
         return message;
     }

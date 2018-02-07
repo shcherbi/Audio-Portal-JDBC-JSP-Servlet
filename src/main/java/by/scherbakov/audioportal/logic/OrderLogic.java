@@ -4,6 +4,7 @@ import by.scherbakov.audioportal.dao.OrderDAO;
 import by.scherbakov.audioportal.dao.UserDAO;
 import by.scherbakov.audioportal.entity.AudioTrack;
 import by.scherbakov.audioportal.entity.Order;
+import by.scherbakov.audioportal.entity.User;
 import by.scherbakov.audioportal.exception.CommonException;
 import by.scherbakov.audioportal.exception.LogicException;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -55,9 +57,39 @@ public class OrderLogic {
                 orderDAO.addTrackToOrderList(idOrder,idAudioTrack);
             }
         } catch (LogicException e) {
-            LOGGER.error("Invalid parameters");
+            LOGGER.error("Invalid parameters.");
             return false;
         }
         return true;
+    }
+
+    public BigDecimal calculateTotalPrice(Set orderList){
+        BigDecimal totalPrice = new BigDecimal(0);
+        try {
+            if (orderList==null) {
+                throw new LogicException();
+            }
+            Iterator<AudioTrack> iterator = orderList.iterator();
+            while (iterator.hasNext()) {
+                totalPrice=totalPrice.add(iterator.next().getPrice());
+            }
+        } catch (LogicException e) {
+            LOGGER.error("Invalid parameter.");
+        }
+        return totalPrice;
+    }
+    public BigDecimal calculateTotalPriceBonus(String bonus, BigDecimal totalPrice){
+        BigDecimal totalPriceBonus = new BigDecimal(0);
+        try {
+            if (bonus==null||bonus.isEmpty()||totalPrice==null) {
+                throw new LogicException();
+            }
+            int bonusValue = Integer.parseInt(bonus);
+            double newTotalPrice = totalPrice.doubleValue()-(totalPrice.doubleValue()*bonusValue/100);
+            totalPriceBonus = new BigDecimal(newTotalPrice);
+        } catch (LogicException e) {
+            LOGGER.error("Invalid parameters.");
+        }
+        return totalPriceBonus;
     }
 }

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../../css/headerStyle.css">
     <link rel="stylesheet" href="../../css/trackStyle.css">
     <link rel="stylesheet" href="../../css/footerStyle.css">
+    <script rel="script" src="../../js/mainScript.js"></script>
     <title><fmt:message key="page.trackInfo.title"/></title>
 </head>
 <body>
@@ -110,6 +111,15 @@
                            placeholder="<fmt:message key="page.addTrack.link"/>">
                     <button type="submit" name="changeLinkButton" class="btn change">
                         <fmt:message key="page.trackInfo.change"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
+            <сtag:AdminTag role="${user.role}">
+                <br><br>
+                <form method="POST" action="${pageContext.request.contextPath}/web?command=delete_track&track=${track.id}">
+                    <button type="submit" name="changeLinkButton" class="btn delete">
+                        <fmt:message key="page.trackInfo.delete"/>
                     </button>
                 </form>
                 <br>

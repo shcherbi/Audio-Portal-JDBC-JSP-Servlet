@@ -21,6 +21,7 @@ public class CommentLogic {
             LOGGER.log(Level.INFO, "Add new comment");
         } catch (LogicException e) {
             LOGGER.error("Invalid parameters");
+            message = ERROR_ADD_MESSAGE;
         }
         return message;
     }
