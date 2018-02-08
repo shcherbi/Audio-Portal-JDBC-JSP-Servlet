@@ -116,7 +116,7 @@
                 <br>
             </сtag:AdminTag>
             <сtag:AdminTag role="${user.role}">
-                <br><br>
+                <br>
                 <form method="POST" action="${pageContext.request.contextPath}/web?command=delete_track&track=${track.id}">
                     <button type="submit" name="changeLinkButton" class="btn delete">
                         <fmt:message key="page.trackInfo.delete"/>

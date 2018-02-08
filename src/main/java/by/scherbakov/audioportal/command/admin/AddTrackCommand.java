@@ -32,10 +32,9 @@ public class AddTrackCommand implements ActionCommand {
     @Override
     public String execute(SessionRequestContent requestContent) {
         String page = null;
-        String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
         User user = (User) requestContent.getSessionAttributeValue(USER_ATTRIBUTE);
-        if (SIGN_IN_VALUE.equals(isSignIn) && !ADMIN_ROLE.equals(user.getRole())) {
-            page = MAIN_PAGE_ACTION;
+        if (user==null) {
+            page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
             String name = requestContent.getReguestParameterValue(NAME_PARAMETER);
             String artist = requestContent.getReguestParameterValue(ARTIST_PARAMETER);
@@ -56,7 +55,7 @@ public class AddTrackCommand implements ActionCommand {
             }
             page = MAIN_PAGE_ACTION;
         }else {
-            page = ConfigurationManager.getProperty(LOGIN_PAGE);
+            page = MAIN_PAGE_ACTION;
         }
         return page;
     }

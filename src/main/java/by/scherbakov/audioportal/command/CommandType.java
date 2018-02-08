@@ -36,7 +36,8 @@ public enum CommandType {
     ALL_CLIENTS(new AllClientsCommand()),
     GRANT_USER(new GrantUserCommand()),
     SET_BONUS(new SetBonusCommand()),
-    DELETE_USER(new DeleteUserCommand());
+    DELETE_USER(new DeleteUserCommand()),
+    DELETE_TRACK(new DeleteTrackCommand());
 
     ActionCommand command;
 
