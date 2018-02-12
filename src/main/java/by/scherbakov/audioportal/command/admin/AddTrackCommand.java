@@ -1,19 +1,21 @@
 package by.scherbakov.audioportal.command.admin;
 
 import by.scherbakov.audioportal.command.ActionCommand;
-import by.scherbakov.audioportal.entity.AudioTrack;
 import by.scherbakov.audioportal.entity.User;
 import by.scherbakov.audioportal.logic.AudioTrackLogic;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
-import java.math.BigDecimal;
+/**
+ * Class {@code AddTrackCommand} is used to add audio track
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
 
 public class AddTrackCommand implements ActionCommand {
-    private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
     private static final String USER_ATTRIBUTE = "user";
-    private static final String SIGN_IN_VALUE = "true";
     private static final String ADMIN_ROLE = "admin";
     private static final String LOGIN_PAGE = "path.page.login";
     private static final String NAME_PARAMETER = "name";
@@ -33,19 +35,18 @@ public class AddTrackCommand implements ActionCommand {
     public String execute(SessionRequestContent requestContent) {
         String page = null;
         User user = (User) requestContent.getSessionAttributeValue(USER_ATTRIBUTE);
-        if (user==null) {
+        if (user == null) {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
-            String name = requestContent.getReguestParameterValue(NAME_PARAMETER);
-            String artist = requestContent.getReguestParameterValue(ARTIST_PARAMETER);
-            String album = requestContent.getReguestParameterValue(ALBUM_PARAMETER);
-            String studio = requestContent.getReguestParameterValue(STUDIO_PARAMETER);
-            String date = requestContent.getReguestParameterValue(DATE_PARAMETER);
-            String genre = requestContent.getReguestParameterValue(GENRE_PARAMETER);
-            BigDecimal price = new BigDecimal
-                    (requestContent.getReguestParameterValue(PRICE_PARAMETER));
-            String link = requestContent.getReguestParameterValue(LINK_PARAMETER);
-            String imageLink = requestContent.getReguestParameterValue(IMAGE_LINK_PARAMETER);
+            String name = requestContent.getRequestParameterValue(NAME_PARAMETER);
+            String artist = requestContent.getRequestParameterValue(ARTIST_PARAMETER);
+            String album = requestContent.getRequestParameterValue(ALBUM_PARAMETER);
+            String studio = requestContent.getRequestParameterValue(STUDIO_PARAMETER);
+            String date = requestContent.getRequestParameterValue(DATE_PARAMETER);
+            String genre = requestContent.getRequestParameterValue(GENRE_PARAMETER);
+            String price = requestContent.getRequestParameterValue(PRICE_PARAMETER);
+            String link = requestContent.getRequestParameterValue(LINK_PARAMETER);
+            String imageLink = requestContent.getRequestParameterValue(IMAGE_LINK_PARAMETER);
             AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
             String message = audioTrackLogic.addTrack(name, artist, album, studio, date, genre, price, link, imageLink);
             if (!message.isEmpty()) {
@@ -54,7 +55,7 @@ public class AddTrackCommand implements ActionCommand {
                 requestContent.setRequestAttributeValue(MISTAKE_ATTRIBUTE, errorMessage);
             }
             page = MAIN_PAGE_ACTION;
-        }else {
+        } else {
             page = MAIN_PAGE_ACTION;
         }
         return page;

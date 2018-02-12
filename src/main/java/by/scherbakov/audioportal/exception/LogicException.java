@@ -1,5 +1,11 @@
 package by.scherbakov.audioportal.exception;
 
+/**
+ * {@code LogicException} is used to store Logic level exceptions.
+ *
+ * @author ScherbakovIlia
+ * @see Exception
+ */
 public class LogicException extends Exception {
     public LogicException() {
         super();

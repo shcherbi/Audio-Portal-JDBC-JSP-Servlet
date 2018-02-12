@@ -3,6 +3,11 @@ package by.scherbakov.audioportal.entity;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Class {@code Album} is used to store Album entity.
+ *
+ * @author ScherbakovIlia
+ */
 public class Album {
     private int id;
     private String albumName;

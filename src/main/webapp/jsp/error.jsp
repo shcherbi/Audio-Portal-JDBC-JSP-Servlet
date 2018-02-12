@@ -1,15 +1,43 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isErrorPage="true" contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setBundle basename="properties.content"/>
 <html>
 <head>
-    <title>Ошибка</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <link rel="icon" href="../../images/logogreen.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/headerStyle.css">
+    <link rel="stylesheet" href="../css/registerStyle.css">
+    <link rel="stylesheet" href="../css/footerStyle.css">
+    <title><fmt:message key="page.error.title"/></title>
 </head>
 <body>
-Request from ${pageContext.errorData.requestURI} is failed
-<br/>
-Servlet name or type: ${pageContext.errorData.servletName}
-<br/>
-Status code: ${pageContext.errorData.statusCode}
-<br/>
-Exception: ${pageContext.errorData.throwable}
+<c:if test="${user ne null}">
+    <jsp:include page="common/header.jsp"/>
+</c:if>
+<div class="container text-center">
+    <br><br>
+    <c:if test="${user eq null}">
+        <a href="${pageContext.request.contextPath}/jsp/login.jsp"><img src="../images/logogreen.png" height="90px" width="105px"></a>
+    </c:if>
+    <br><br><br>
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <b><fmt:message key="page.error.requestFrom"/> ${pageContext.errorData.requestURI} <fmt:message key="page.error.isFailed"/>
+            <br/>
+            <fmt:message key="page.error.servletName"/> ${pageContext.errorData.servletName}
+            <br/>
+            <fmt:message key="page.error.status"/> ${pageContext.errorData.statusCode}
+            <br/>
+            <fmt:message key="page.error.exception"/> ${pageContext.errorData.throwable}
+            </b>
+        </div>
+    </div>
+</div>
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package by.scherbakov.audioportal.dao;
 
 import by.scherbakov.audioportal.database.ConnectionPool;
+import by.scherbakov.audioportal.entity.AudioTrack;
 import by.scherbakov.audioportal.entity.Comment;
 import by.scherbakov.audioportal.exception.CommonException;
 import org.apache.logging.log4j.Level;
@@ -15,7 +16,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CommentDAO extends AbstractDAO<Comment> {
+/**
+ * Class {@code CommentDAO} is used to connect with data base.
+ * Does all actions related with comments.
+ *
+ * @author ScherbakovIlia
+ * @see AbstractDAO
+ */
+
+public class CommentDAO implements AbstractDAO<Comment> {
     public static final Logger LOGGER = LogManager.getLogger(CommentDAO.class);
 
     private static final String COMMENT_ID = "idComments";
@@ -43,12 +52,7 @@ public class CommentDAO extends AbstractDAO<Comment> {
             statement = connection.prepareStatement(SQL_SELECT_ALL_COMMENTS);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt(COMMENT_ID);
-                int idAudioTrack = resultSet.getInt(AUDIO_TRACK_ID);
-                String login = resultSet.getString(LOGIN);
-                String text = resultSet.getString(TEXT);
-                Date date = resultSet.getDate(DATE);
-                Comment comment = new Comment(id, idAudioTrack, login, text, date);
+                Comment comment = createComment(resultSet);
                 comments.add(comment);
             }
             LOGGER.log(Level.INFO, "Received all comments from the database");
@@ -77,11 +81,7 @@ public class CommentDAO extends AbstractDAO<Comment> {
             statement.setInt(1, idComment);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                int idAudioTrack = resultSet.getInt(AUDIO_TRACK_ID);
-                String login = resultSet.getString(LOGIN);
-                String text = resultSet.getString(TEXT);
-                Date date = resultSet.getDate(DATE);
-                comment = new Comment(idComment, idAudioTrack, login, text, date);
+                comment = createComment(resultSet);
             }
             LOGGER.log(Level.INFO, "Received comment from the database");
         } catch (CommonException e) {
@@ -158,7 +158,39 @@ public class CommentDAO extends AbstractDAO<Comment> {
         return isDeleted;
     }
 
-    public List<Comment> findByTrackId(int idTrack) {
+    /**
+     * Create comment
+     *
+     * @param resultSet is data from database
+     * @return Comment object
+     * @see Comment
+     */
+    private Comment createComment(ResultSet resultSet) throws SQLException {
+        Comment comment = null;
+        try {
+            if (resultSet == null) {
+                throw new CommonException();
+            }
+            int id = resultSet.getInt(COMMENT_ID);
+            int idAudioTrack = resultSet.getInt(AUDIO_TRACK_ID);
+            String login = resultSet.getString(LOGIN);
+            String text = resultSet.getString(TEXT);
+            Date date = resultSet.getDate(DATE);
+            comment = new Comment(id, idAudioTrack, login, text, date);
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameter.", e);
+        }
+        return comment;
+    }
+
+    /**
+     * Retrieve comments by id audio track
+     *
+     * @param idTrack is track's id
+     * @return collection of comments
+     * @see Comment
+     */
+    public List<Comment> findCommentsByTrackId(int idTrack) {
         List<Comment> comments=null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -192,6 +224,16 @@ public class CommentDAO extends AbstractDAO<Comment> {
         return comments;
     }
 
+    /**
+     * Add comment to database
+     *
+     * @param login is user's login
+     * @param idTrack is track's id
+     * @param text   is text of comment
+     * @param date   is date when comment was written
+     * @return {@code true} if comment is added. {@code false}  if comment isn't added.
+     * @see AudioTrack
+     */
     public boolean addComment(String login, int idTrack, String text,String date) {
         Connection connection = null;
         PreparedStatement statement = null;

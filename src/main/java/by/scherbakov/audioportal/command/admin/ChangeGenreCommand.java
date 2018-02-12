@@ -10,6 +10,13 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code ChangeGenreCommand} is used to change genre
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class ChangeGenreCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";
     private static final String ADMIN_ROLE = "admin";
@@ -18,7 +25,6 @@ public class ChangeGenreCommand implements ActionCommand {
     private static final String TRACK_ATTRIBUTE = "track";
     private static final String GENRE_PARAMETER = "genre";
     private static final String LOCALE_ATTRIBUTE = "locale";
-    private static final String EMPTY_FIELD = "";
     private static final String MISTAKE_ATTRIBUTE = "updateAudioTrackError";
     private static final String TRACK_PAGE_ACTION = "/web?command=track_info&track=";
 
@@ -30,24 +36,22 @@ public class ChangeGenreCommand implements ActionCommand {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
             AudioTrack track = (AudioTrack) requestContent.getSessionAttributeValue(TRACK_ATTRIBUTE);
-            String genreName = requestContent.getReguestParameterValue(GENRE_PARAMETER);
+            String genreName = requestContent.getRequestParameterValue(GENRE_PARAMETER);
             GenreLogic genreLogic = new GenreLogic();
             Genre genre = genreLogic.updateGenre(genreName);
             String message = null;
-            if(genre!=null){
+            if (genre != null) {
                 track.setIdGenre(genre.getId());
                 AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
                 message = audioTrackLogic.updateAudioTrack(track);
-            }else {
-                message=EMPTY_FIELD;
             }
-            if (!message.isEmpty()) {
+            if (message != null && !message.isEmpty()) {
                 String errorMessage = MessageManager.getMessage(message,
                         (String) requestContent.getSessionAttributeValue(LOCALE_ATTRIBUTE));
                 requestContent.setRequestAttributeValue(MISTAKE_ATTRIBUTE, errorMessage);
             }
             page = TRACK_PAGE_ACTION + track.getId();
-        }else {
+        } else {
             page = MAIN_PAGE_ACTION;
         }
         return page;

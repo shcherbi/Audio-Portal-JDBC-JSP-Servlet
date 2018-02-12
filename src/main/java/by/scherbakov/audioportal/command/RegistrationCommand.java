@@ -5,6 +5,13 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code RegistrationCommand} is used to register user
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class RegistrationCommand implements ActionCommand {
     private static final String NICKNAME_PARAMETER = "nickname";
     private static final String PASSWORD_PARAMETER = "password";
@@ -19,10 +26,10 @@ public class RegistrationCommand implements ActionCommand {
     public String execute(SessionRequestContent requestContent) {
         String page = null;
         UserLogic userLogic = new UserLogic();
-        String nickname = requestContent.getReguestParameterValue(NICKNAME_PARAMETER);
-        String password = requestContent.getReguestParameterValue(PASSWORD_PARAMETER);
-        String email = requestContent.getReguestParameterValue(EMAIL_PARAMETER);
-        String role = requestContent.getReguestParameterValue(ROLE_PARAMETER);
+        String nickname = requestContent.getRequestParameterValue(NICKNAME_PARAMETER);
+        String password = requestContent.getRequestParameterValue(PASSWORD_PARAMETER);
+        String email = requestContent.getRequestParameterValue(EMAIL_PARAMETER);
+        String role = requestContent.getRequestParameterValue(ROLE_PARAMETER);
         String message = userLogic.registerUser(nickname, password, email, role);
         if (!message.isEmpty()) {
             String errorMessage = MessageManager.getMessage(message,

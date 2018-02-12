@@ -2,6 +2,11 @@ package by.scherbakov.audioportal.entity;
 
 import java.util.Objects;
 
+/**
+ * Class {@code Genre} is used to store Genre entity.
+ *
+ * @author ScherbakovIlia
+ */
 public class Genre {
     private int id;
     private String genre;

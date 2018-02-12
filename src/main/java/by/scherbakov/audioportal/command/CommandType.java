@@ -6,6 +6,13 @@ import by.scherbakov.audioportal.command.account.ChangePasswordCommand;
 import by.scherbakov.audioportal.command.admin.*;
 import by.scherbakov.audioportal.command.client.*;
 
+/**
+ * {@code CommandType} is used as enum to create an
+ * object of necessary command
+ *
+ * @author ScherbakovIlia
+ */
+
 public enum CommandType {
     LOGIN(new LoginCommand()),
     LOGOUT(new LogoutCommand()),
@@ -37,7 +44,12 @@ public enum CommandType {
     GRANT_USER(new GrantUserCommand()),
     SET_BONUS(new SetBonusCommand()),
     DELETE_USER(new DeleteUserCommand()),
-    DELETE_TRACK(new DeleteTrackCommand());
+    DELETE_TRACK(new DeleteTrackCommand()),
+    ASSEMBLY_LIST(new MusicAssemblyListCommand()),
+    ADD_TO_ASSEMBLY(new AddTrackToAssemblyCommand()),
+    DELETE_ASSEMBLY(new DeleteMusicAssemblyCommand()),
+    ASSEMBLY_INFO(new MusicAssemblyInfoCommand()),
+    ADD_ASSEMBLY(new AddMusicAssemblyCommand());
 
     ActionCommand command;
 

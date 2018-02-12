@@ -7,6 +7,13 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code SetBonusCommand} is used to set bonus to user
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class SetBonusCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";
     private static final String ADMIN_ROLE = "admin";
@@ -25,8 +32,8 @@ public class SetBonusCommand implements ActionCommand {
         if (user == null) {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
-            String login = requestContent.getReguestParameterValue(LOGIN_ATTRIBUTE);
-            String bonus = requestContent.getReguestParameterValue(BONUS_ATTRIBUTE);
+            String login = requestContent.getRequestParameterValue(LOGIN_ATTRIBUTE);
+            String bonus = requestContent.getRequestParameterValue(BONUS_ATTRIBUTE);
             UserLogic userLogic = new UserLogic();
             String message = userLogic.setBonus(login, bonus);
             if (!message.isEmpty()) {

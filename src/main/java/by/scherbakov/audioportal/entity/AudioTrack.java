@@ -3,6 +3,11 @@ package by.scherbakov.audioportal.entity;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * Class {@code AudioTrack} is used to store AudioTrack entity.
+ *
+ * @author ScherbakovIlia
+ */
 public class AudioTrack {
     private int id;
     private String name;

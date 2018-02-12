@@ -12,6 +12,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * Class {@code PreOrderCommand} is used to view all audio tracks that user want to buy
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class PreOrderCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
     private static final String SIGN_IN_VALUE = "true";

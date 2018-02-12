@@ -6,6 +6,13 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code FindTrackCommand} is used to find track
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 
 public class FindTrackCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
@@ -24,7 +31,7 @@ public class FindTrackCommand implements ActionCommand {
         String page = null;
         String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
         if(SIGN_IN_VALUE.equals(isSignIn)) {
-            String trackName = requestContent.getReguestParameterValue(TRACK_NAME_ATTRIBUTE);
+            String trackName = requestContent.getRequestParameterValue(TRACK_NAME_ATTRIBUTE);
             AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
             AudioTrack audioTrack = audioTrackLogic.takeTrackByName(trackName);
             if (audioTrack == null) {

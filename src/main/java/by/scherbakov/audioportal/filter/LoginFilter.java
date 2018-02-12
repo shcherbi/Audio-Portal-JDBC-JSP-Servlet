@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Class {@code LoginFilter} is used to control access to users pages
+ *
+ * @author ScherbakovIlia
+ */
 @WebFilter (filterName = "LoginFilter",
         initParams = @WebInitParam(name = "indexPath", value = "/index.jsp"))
 public class LoginFilter implements Filter {

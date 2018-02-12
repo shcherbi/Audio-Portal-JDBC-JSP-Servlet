@@ -7,6 +7,14 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code ChangeEmailCommand} is used to change
+ * user's email
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class ChangeEmailCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
     private static final String SIGN_IN_VALUE = "true";
@@ -21,21 +29,22 @@ public class ChangeEmailCommand implements ActionCommand {
     public String execute(SessionRequestContent requestContent) {
         String page = null;
         String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
-        if(SIGN_IN_VALUE.equals(isSignIn)){
-            String email = requestContent.getReguestParameterValue(EMAIL_PARAMETER);
+        if (SIGN_IN_VALUE.equals(isSignIn)) {
+            String email = requestContent.getRequestParameterValue(EMAIL_PARAMETER);
             User user = (User) requestContent.getSessionAttributeValue(USER_ATTRIBUTE);
             UserLogic userLogic = new UserLogic();
-            String message = userLogic.changeEmail(user.getLogin(),email);
+            String login = user.getLogin();
+            String message = userLogic.changeEmail(login, email);
             if (!message.isEmpty()) {
                 String errorMessage = MessageManager.getMessage(message,
                         (String) requestContent.getSessionAttributeValue(LOCALE_ATTRIBUTE));
                 requestContent.setRequestAttributeValue(MISTAKE_ATTRIBUTE, errorMessage);
-            }else {
+            } else {
                 user.setEmail(email);
-                requestContent.setSessionAttributeValue(USER_ATTRIBUTE,user);
+                requestContent.setSessionAttributeValue(USER_ATTRIBUTE, user);
             }
             page = ConfigurationManager.getProperty(ACCOUNT_PAGE);
-        }else {
+        } else {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         }
         return page;

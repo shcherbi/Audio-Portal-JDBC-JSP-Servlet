@@ -7,6 +7,14 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code DeleteUserCommand} is used to delete
+ * user
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class DeleteUserCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";
     private static final String ADMIN_ROLE = "admin";
@@ -24,7 +32,7 @@ public class DeleteUserCommand implements ActionCommand {
         if (user == null) {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
-            String login = requestContent.getReguestParameterValue(LOGIN_ATTRIBUTE);
+            String login = requestContent.getRequestParameterValue(LOGIN_ATTRIBUTE);
             UserLogic userLogic = new UserLogic();
             String message = userLogic.deleteUser(login);
             if (!message.isEmpty()) {

@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Class {@code AdminFilter} is used to control access to admin pages
+ *
+ * @author ScherbakovIlia
+ */
 @WebFilter(filterName = "AdminFilter",
         initParams = @WebInitParam(name = "indexPath", value = "/index.jsp"))
 public class AdminFilter implements Filter {

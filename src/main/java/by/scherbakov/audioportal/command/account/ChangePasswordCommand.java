@@ -8,6 +8,14 @@ import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 import org.apache.commons.codec.digest.DigestUtils;
 
+/**
+ * Class {@code ChangePasswordCommand} is used to change
+ * user's password
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class ChangePasswordCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
     private static final String SIGN_IN_VALUE = "true";
@@ -22,8 +30,8 @@ public class ChangePasswordCommand implements ActionCommand {
     public String execute(SessionRequestContent requestContent) {
         String page = null;
         String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
-        if(SIGN_IN_VALUE.equals(isSignIn)) {
-            String password = requestContent.getReguestParameterValue(PASSWORD_PARAMETER);
+        if (SIGN_IN_VALUE.equals(isSignIn)) {
+            String password = requestContent.getRequestParameterValue(PASSWORD_PARAMETER);
             User user = (User) requestContent.getSessionAttributeValue(USER_ATTRIBUTE);
             UserLogic userLogic = new UserLogic();
             String message = userLogic.changePassword(user.getLogin(), password);
@@ -36,7 +44,7 @@ public class ChangePasswordCommand implements ActionCommand {
                 requestContent.setSessionAttributeValue(USER_ATTRIBUTE, user);
             }
             page = ConfigurationManager.getProperty(ACCOUNT_PAGE);
-        }else {
+        } else {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         }
         return page;

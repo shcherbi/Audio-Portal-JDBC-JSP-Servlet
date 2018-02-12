@@ -1,8 +1,14 @@
 package by.scherbakov.audioportal.command;
 
-import by.scherbakov.audioportal.command.ActionCommand;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
+
+/**
+ * Class {@code LogoutCommand} is used to sign out user
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
 
 public class LogoutCommand implements ActionCommand {
     private static final String SIGN_IN_VALUE = "true";

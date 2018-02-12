@@ -7,9 +7,23 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Class {@code LoginLogic} is a service class used to connect commands
+ * with UserDAO.
+ *
+ * @author ScherbakovIlia
+ */
+
 public class LoginLogic {
     private static final Logger LOGGER = LogManager.getLogger(LoginLogic.class);
 
+    /**
+     * Check user registration status. Transfers to UserDAO.
+     *
+     * @param login    is user's login
+     * @param password is user's password
+     * @return {@code true} if user is exist. {@code false} if user isn't exist.
+     */
     public boolean checkLogin(String login, String password) {
         boolean checkFlag = false;
         try {

@@ -2,12 +2,18 @@ package by.scherbakov.audioportal.command.admin;
 
 import by.scherbakov.audioportal.command.ActionCommand;
 import by.scherbakov.audioportal.entity.User;
-import by.scherbakov.audioportal.logic.AudioTrackLogic;
 import by.scherbakov.audioportal.logic.UserLogic;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
 import java.util.List;
+
+/**
+ * Class {@code AllClientsCommand} is used to view all clients
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
 
 public class AllClientsCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";

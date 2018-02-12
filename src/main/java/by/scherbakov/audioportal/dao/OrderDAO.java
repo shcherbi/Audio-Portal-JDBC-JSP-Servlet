@@ -1,21 +1,26 @@
 package by.scherbakov.audioportal.dao;
 
 import by.scherbakov.audioportal.database.ConnectionPool;
-import by.scherbakov.audioportal.entity.AudioTrack;
 import by.scherbakov.audioportal.entity.Order;
 import by.scherbakov.audioportal.exception.CommonException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
 import java.sql.*;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OrderDAO extends AbstractDAO<Order> {
+/**
+ * Class {@code OrderDAO} is used to connect with data base.
+ * Does all actions related with orders.
+ *
+ * @author ScherbakovIlia
+ * @see AbstractDAO
+ */
+
+public class OrderDAO implements AbstractDAO<Order> {
     public static final Logger LOGGER = LogManager.getLogger(OrderDAO.class);
 
     private static final String ORDER_ID = "idOrder";
@@ -47,12 +52,7 @@ public class OrderDAO extends AbstractDAO<Order> {
             statement = connection.prepareStatement(SQL_SELECT_ALL_ORDERS);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt(ORDER_ID);
-                String login = resultSet.getString(LOGIN);
-                String cardNumber = resultSet.getString(CARD_NUMBER);
-                String SVCCode = resultSet.getString(SVC_CODE);
-                Date date = resultSet.getDate(DATE);
-                Order order = new Order(id, login, cardNumber, SVCCode, date);
+                Order order = createOrder(resultSet);
                 orders.add(order);
             }
             LOGGER.log(Level.INFO, "Received all orders from the database");
@@ -81,11 +81,7 @@ public class OrderDAO extends AbstractDAO<Order> {
             statement.setInt(1, idOrder);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String login = resultSet.getString(LOGIN);
-                String cardNumber = resultSet.getString(CARD_NUMBER);
-                String SVCCode = resultSet.getString(SVC_CODE);
-                Date date = resultSet.getDate(DATE);
-                order = new Order(idOrder, login, cardNumber, SVCCode, date);
+                order = createOrder(resultSet);
             }
             LOGGER.log(Level.INFO, "Received order from the database");
         } catch (CommonException e) {
@@ -118,7 +114,7 @@ public class OrderDAO extends AbstractDAO<Order> {
             statement.setString(3, order.getSVCCode());
             statement.setDate(4, (java.sql.Date) order.getDate());
             statement.setInt(5, order.getId());
-            if(statement.executeUpdate()!=0){
+            if (statement.executeUpdate() != 0) {
                 isUpdated = true;
             }
             LOGGER.log(Level.INFO, "Updated order in the database");
@@ -146,7 +142,7 @@ public class OrderDAO extends AbstractDAO<Order> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SQL_DELETE_ORDER);
             statement.setInt(1, order.getId());
-            if(statement.executeUpdate()!=0){
+            if (statement.executeUpdate() != 0) {
                 isDeleted = true;
             }
             LOGGER.log(Level.INFO, "Deleted order in the database");
@@ -162,6 +158,38 @@ public class OrderDAO extends AbstractDAO<Order> {
         return isDeleted;
     }
 
+    /**
+     * Create order
+     *
+     * @param resultSet is data from database
+     * @return Order object
+     * @see Order
+     */
+    private Order createOrder(ResultSet resultSet) throws SQLException {
+        Order order = null;
+        try {
+            if (resultSet == null) {
+                throw new CommonException();
+            }
+            int id = resultSet.getInt(ORDER_ID);
+            String login = resultSet.getString(LOGIN);
+            String cardNumber = resultSet.getString(CARD_NUMBER);
+            String SVCCode = resultSet.getString(SVC_CODE);
+            Date date = resultSet.getDate(DATE);
+            order = new Order(id, login, cardNumber, SVCCode, date);
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameter.", e);
+        }
+        return order;
+    }
+
+    /**
+     * Retrieved ordered audio tracks id by login
+     *
+     * @param login is user's id
+     * @return collection of tracks id
+     * @see Order
+     */
     public List<Integer> findIdTrackByLogin(String login) {
         List<Integer> idTracks = null;
         Connection connection = null;
@@ -191,6 +219,16 @@ public class OrderDAO extends AbstractDAO<Order> {
         return idTracks;
     }
 
+    /**
+     * Add order to database
+     *
+     * @param login      is user's login
+     * @param cardNumber is number of client card
+     * @param svcCode    is security code of client card
+     * @param date       is date when client make order
+     * @return Order object
+     * @see Order
+     */
     public Order addOrder(String login, String cardNumber, String svcCode, String date) {
         Order order = null;
         Connection connection = null;
@@ -224,11 +262,18 @@ public class OrderDAO extends AbstractDAO<Order> {
         return order;
     }
 
+    /**
+     * Add track to order
+     *
+     * @param idOrder      is order id
+     * @param idAudioTrack is track's id
+     * @see Order
+     */
     public void addTrackToOrderList(int idOrder, int idAudioTrack) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            if (idOrder<=0||idAudioTrack<=0) {
+            if (idOrder <= 0 || idAudioTrack <= 0) {
                 throw new CommonException();
             }
             connection = ConnectionPool.getInstance().takeConnection();

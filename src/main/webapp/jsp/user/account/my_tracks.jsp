@@ -17,6 +17,11 @@
 <body>
 <jsp:include page="../../../jsp/common/menu.jsp"/>
 <div class="container">
+    <c:if test="${orderedTrack.isEmpty()}">
+        <div class="col-xs-5 text-center">
+            <b><fmt:message key="page.myTrack.empty"/></b>
+        </div>
+    </c:if>
     <c:forEach var="track" items="${orderedTrack}">
     <br>
     <div class="row">

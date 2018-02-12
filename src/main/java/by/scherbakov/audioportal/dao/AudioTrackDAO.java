@@ -1,7 +1,6 @@
 package by.scherbakov.audioportal.dao;
 
 import by.scherbakov.audioportal.database.ConnectionPool;
-import by.scherbakov.audioportal.entity.Album;
 import by.scherbakov.audioportal.entity.AudioTrack;
 import by.scherbakov.audioportal.exception.CommonException;
 import org.apache.logging.log4j.Level;
@@ -10,13 +9,18 @@ import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
+/**
+ * Class {@code AudioTrackDAO} is used to connect with data base.
+ * Does all actions related with audio tracks.
+ *
+ * @author ScherbakovIlia
+ * @see AbstractDAO
+ */
+
+public class AudioTrackDAO implements AbstractDAO<AudioTrack> {
     public static final Logger LOGGER = LogManager.getLogger(AudioTrackDAO.class);
 
     private static final String AUDIO_TRACK_ID = "idAudio_Track";
@@ -34,13 +38,19 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
     private static final String SQL_DELETE_AUDIO_TRACK = "DELETE FROM audio_track WHERE idAudio_Track=?";
 
     private static final String SQL_FIND_AUDIO_TRACK_BY_NAME = "SELECT idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM audio_track WHERE `audio_track`.name=?";
-    private static final String SQL_FIND_ORDERED_TRACK_BY_LOGIN = "SELECT audio_track.idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM order_list\n" +
+    private static final String SQL_FIND_ORDERED_TRACK_BY_LOGIN = "SELECT `audio_track`.idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM order_list\n" +
             "JOIN audio_track\n" +
             "ON order_list.idAudio_Track = audio_track.idAudio_Track\n" +
             "JOIN `order`\n" +
             "ON order_list.idOrder = `order`.idOrder\n" +
             "WHERE `order`.login = ?\n";
     private static final String SQL_ADD_AUDIO_TRACK = "INSERT INTO audio_track(`audio_track`.name, artist, idAlbum, idGenre, price, link, image_link) VALUES (?,?,?,?,?,?,?)";
+    private static final String SQL_FIND_ASSEMBLY_TRACK = "SELECT `audio_track`.idAudio_Track, `audio_track`.name, artist, idAlbum, idGenre, price, link, image_link FROM assembly_list\n" +
+            "JOIN audio_track\n" +
+            "ON`assembly_list`.idAudio_Track = `audio_track`.idAudio_Track\n" +
+            "JOIN assembly\n" +
+            "ON`assembly_list`.idAssembly = `assembly`.idAssembly\n" +
+            "WHERE `assembly`.name=?;";
 
     @Override
     public List<AudioTrack> takeAll() {
@@ -116,7 +126,8 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
             statement.setBigDecimal(5, audioTrack.getPrice());
             statement.setString(6, audioTrack.getLinkPath());
             statement.setString(7, audioTrack.getImagePath());
-            if(statement.executeUpdate()!=0){
+            statement.setInt(8, audioTrack.getId());
+            if (statement.executeUpdate() != 0) {
                 isUpdated = true;
             }
             LOGGER.log(Level.INFO, "Updated audio track in the database");
@@ -144,7 +155,7 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.prepareStatement(SQL_DELETE_AUDIO_TRACK);
             statement.setInt(1, audioTrack.getId());
-            if(statement.executeUpdate()!=0){
+            if (statement.executeUpdate() != 0) {
                 isDeleted = true;
             }
             LOGGER.log(Level.INFO, "Deleted audio track in the database");
@@ -160,6 +171,13 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
         return isDeleted;
     }
 
+    /**
+     * Retrieve audio track by track name
+     *
+     * @param trackName is track's name
+     * @return AudioTrack object
+     * @see AudioTrack
+     */
     public AudioTrack findAudioTrackByName(String trackName) {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -195,6 +213,13 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
         return audioTrack;
     }
 
+    /**
+     * Retrieve ordered audio track by login
+     *
+     * @param login is user's login
+     * @return collection of audio tracks
+     * @see AudioTrack
+     */
     public List<AudioTrack> findOrderedTracksByLogin(String login) {
         List<AudioTrack> audioTracks = new ArrayList<>();
         Connection connection = null;
@@ -224,6 +249,49 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
         return audioTracks;
     }
 
+    /**
+     * Retrieve assembly audio track by assembly name
+     *
+     * @param assemblyName is assembly name
+     * @return collection of audio tracks
+     * @see AudioTrack
+     */
+    public List<AudioTrack> findAssemblyTrackByName(String assemblyName) {
+        List<AudioTrack> audioTracks = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            if (assemblyName == null || assemblyName.isEmpty()) {
+                throw new CommonException();
+            }
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.prepareStatement(SQL_FIND_ASSEMBLY_TRACK);
+            statement.setString(1, assemblyName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                AudioTrack audioTrack = createAudioTrack(resultSet);
+                audioTracks.add(audioTrack);
+            }
+            LOGGER.log(Level.INFO, "Received all audio tracks from assembly from the database");
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameter.", e);
+        } catch (SQLException e) {
+            LOGGER.error("SQLException in trying to take all audio tracks from assembly by name", e);
+        } finally {
+            if (connection != null) {
+                ConnectionPool.getInstance().closeConnection(connection);
+            }
+        }
+        return audioTracks;
+    }
+
+    /**
+     * Create audio track
+     *
+     * @param resultSet is data from database
+     * @return AudioTrack object
+     * @see AudioTrack
+     */
     private AudioTrack createAudioTrack(ResultSet resultSet) throws SQLException {
         AudioTrack audioTrack = null;
         try {
@@ -245,8 +313,21 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
         return audioTrack;
     }
 
+    /**
+     * Add audio track to database
+     *
+     * @param trackName is track's name
+     * @param artist    is artist of track
+     * @param idAlbum   is album's id
+     * @param idGenre   is genre id
+     * @param price   is track's price
+     * @param link   is link to audio track
+     * @param imageLink   is link to image for audio track
+     * @return {@code true} if audio track is added. {@code false}  if audio track isn't added.
+     * @see AudioTrack
+     */
     public boolean addAudioTrack(String trackName, String artist, int idAlbum, int idGenre, BigDecimal price,
-                                    String link, String imageLink) {
+                                 String link, String imageLink) {
         AudioTrack audioTrack = null;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -267,7 +348,7 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
                 statement.setBigDecimal(5, price);
                 statement.setString(6, link);
                 statement.setString(7, imageLink);
-                if(statement.executeUpdate()!=0){
+                if (statement.executeUpdate() != 0) {
                     isAdded = true;
                 }
             }
@@ -284,6 +365,19 @@ public class AudioTrackDAO extends AbstractDAO<AudioTrack> {
         return isAdded;
     }
 
+    /**
+     * Check existence of audio track and retrieve if exist
+     *
+     * @param audioTracks is collection of audio tracks
+     * @param artist    is artist of track
+     * @param idAlbum   is album's id
+     * @param idGenre   is genre id
+     * @param price   is track's price
+     * @param link   is link to audio track
+     * @param imageLink   is link to image for audio track
+     * @return AudioTrack object
+     * @see AudioTrack
+     */
     private AudioTrack checkAndGet(List<AudioTrack> audioTracks, String trackName, String artist, int idAlbum,
                                    int idGenre, BigDecimal price, String link, String imageLink) {
         for (int i = 0; i < audioTracks.size(); i++) {

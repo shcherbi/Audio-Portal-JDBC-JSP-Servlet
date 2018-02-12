@@ -1,10 +1,16 @@
 package by.scherbakov.audioportal.command;
 
-import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+/**
+ * Class {@code ActionFactory} is used to view all audio tracks that user want to buy
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
 
 public class ActionFactory {
     public static final Logger LOGGER = LogManager.getLogger(ActionFactory.class);
@@ -13,17 +19,23 @@ public class ActionFactory {
     private static final String LOCALE_ATTRIBUTE = "locale";
     private static final String WRONG_ACTION_MESSAGE = "message.login.wrongAction";
 
+    /**
+     * Defines request command
+     *
+     * @param requestContent is content of request
+     * @return ActionCommand object
+     */
     public static ActionCommand defineCommand(SessionRequestContent requestContent) {
         ActionCommand current = new EmptyCommand();
-        String action = requestContent.getReguestParameterValue(COMMAND_PARAMETER);
+        String action = requestContent.getRequestParameterValue(COMMAND_PARAMETER);
         if (action == null || action.isEmpty()) {
             return current;
         }
         try {
-            CommandType currentType= CommandType.valueOf(action.toUpperCase());
+            CommandType currentType = CommandType.valueOf(action.toUpperCase());
             current = currentType.getCommandType();
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Command not defined",e);
+            LOGGER.error("Command not defined", e);
             String pageMessage = MessageManager.getMessage(WRONG_ACTION_MESSAGE,
                     (String) requestContent.getSessionAttributeValue(LOCALE_ATTRIBUTE));
             requestContent.setRequestAttributeValue(WRONG_ACTION_ATTRIBUTE, pageMessage);

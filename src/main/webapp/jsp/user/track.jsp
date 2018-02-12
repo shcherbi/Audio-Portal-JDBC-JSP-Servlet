@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="../../css/trackStyle.css">
     <link rel="stylesheet" href="../../css/footerStyle.css">
     <script rel="script" src="../../js/mainScript.js"></script>
+    <script rel="script" src="../../js/jquery-3.3.1.min.js"></script>
+    <script rel="script" src="../../js/validator.js"></script>
     <title><fmt:message key="page.trackInfo.title"/></title>
 </head>
 <body>
@@ -25,9 +27,9 @@
             <img src="${track.imagePath}">
             <br>
             <сtag:AdminTag role="${user.role}">
-                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_image_link">
+                <form method="POST" onsubmit="return checkImageLink()" action="${pageContext.request.contextPath}/web?command=change_image_link">
                     <input type="text" name="imageLink" class="form-control"
-                           placeholder="<fmt:message key="page.addTrack.linkImage"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changeImageLink"/>">
                     <button type="submit" name="changeImageLinkButton" class="btn change">
                         <fmt:message key="page.trackInfo.change"/>
                     </button>
@@ -39,9 +41,9 @@
             <b><fmt:message key="page.trackInfo.artist"/>: </b><c:out value="${track.artist}"/>
             <br>
             <сtag:AdminTag role="${user.role}">
-                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_artist">
+                <form method="POST" onsubmit="return checkArtist()" action="${pageContext.request.contextPath}/web?command=change_artist">
                     <input type="text" name="artist" class="form-control"
-                           placeholder="<fmt:message key="page.trackInfo.artist"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changeArtist"/>">
                     <button type="submit" name="changeArtistButton" class="btn change">
                         <fmt:message key="page.trackInfo.change"/>
                     </button>
@@ -51,9 +53,9 @@
             <b><fmt:message key="page.trackInfo.song"/>: </b><c:out value="${track.name}"/>
             <br>
             <сtag:AdminTag role="${user.role}">
-                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_track_name">
+                <form method="POST" onsubmit="return checkTrackName()" action="${pageContext.request.contextPath}/web?command=change_track_name">
                     <input type="text" name="name" class="form-control"
-                           placeholder="<fmt:message key="page.trackInfo.song"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changeSong"/>">
                     <button type="submit" name="changeSongNameButton" class="btn change">
                         <fmt:message key="page.trackInfo.change"/>
                     </button>
@@ -67,13 +69,13 @@
             <b><fmt:message key="page.trackInfo.date"/>: </b><c:out value="${album.date}"/>
             <br>
             <сtag:AdminTag role="${user.role}">
-                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_album">
+                <form method="POST" onsubmit="return checkAlbum()" action="${pageContext.request.contextPath}/web?command=change_album">
                     <input type="text" name="album" class="form-control"
-                           placeholder="<fmt:message key="page.trackInfo.album"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changeAlbum"/>">
                     <input type="text" name="studio" class="form-control"
-                           placeholder="<fmt:message key="page.trackInfo.studio"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changeStudio"/>">
                     <input type="text" name="date" class="form-control"
-                           placeholder="<fmt:message key="page.trackInfo.date"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changeDate"/>">
                     <button type="submit" name="changeAlbumButton" class="btn change">
                         <fmt:message key="page.trackInfo.change"/>
                     </button>
@@ -83,9 +85,9 @@
             <b><fmt:message key="page.trackInfo.genre"/>: </b><c:out value="${genre.genre}"/>
             <br>
             <сtag:AdminTag role="${user.role}">
-                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_genre">
+                <form method="POST" onsubmit="return checkGenre()" action="${pageContext.request.contextPath}/web?command=change_genre">
                     <input type="text" name="genre" class="form-control"
-                           placeholder="<fmt:message key="page.trackInfo.genre"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changeGenre"/>">
                     <button type="submit" name="changeGenreButton" class="btn change">
                         <fmt:message key="page.trackInfo.change"/>
                     </button>
@@ -95,9 +97,9 @@
             <b><fmt:message key="page.trackInfo.price"/>: </b><c:out value="${track.price}"/>
             <br>
             <сtag:AdminTag role="${user.role}">
-                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_price">
+                <form method="POST" onsubmit="return checkPrice()" action="${pageContext.request.contextPath}/web?command=change_price">
                     <input type="text" name="price" class="form-control"
-                           placeholder="<fmt:message key="page.trackInfo.price"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changePrice"/>">
                     <button type="submit" name="changePriceButton" class="btn change">
                         <fmt:message key="page.trackInfo.change"/>
                     </button>
@@ -106,9 +108,9 @@
             </сtag:AdminTag>
             <br>
             <сtag:AdminTag role="${user.role}">
-                <form method="POST" action="${pageContext.request.contextPath}/web?command=change_link">
+                <form method="POST" onsubmit="return checkLink()" action="${pageContext.request.contextPath}/web?command=change_link">
                     <input type="text" name="link" class="form-control"
-                           placeholder="<fmt:message key="page.addTrack.link"/>">
+                           placeholder="<fmt:message key="page.trackInfo.changeLink"/>">
                     <button type="submit" name="changeLinkButton" class="btn change">
                         <fmt:message key="page.trackInfo.change"/>
                     </button>
@@ -117,8 +119,19 @@
             </сtag:AdminTag>
             <сtag:AdminTag role="${user.role}">
                 <br>
+                <form method="POST" onsubmit="return checkAssembly()" action="${pageContext.request.contextPath}/web?command=add_to_assembly">
+                    <input type="text" name="assembly" class="form-control"
+                           placeholder="<fmt:message key="page.trackInfo.addAssembly"/>">
+                    <button type="submit" name="addToAssemblyButton" class="btn change">
+                        <fmt:message key="page.trackInfo.add"/>
+                    </button>
+                </form>
+                <br>
+            </сtag:AdminTag>
+            <сtag:AdminTag role="${user.role}">
+                <br>
                 <form method="POST" action="${pageContext.request.contextPath}/web?command=delete_track&track=${track.id}">
-                    <button type="submit" name="changeLinkButton" class="btn delete">
+                    <button type="submit" name="deleteTrackButton" class="btn delete">
                         <fmt:message key="page.trackInfo.delete"/>
                     </button>
                 </form>
@@ -134,8 +147,8 @@
                     <fmt:message key="page.main.buy"/>
                 </button>
             </form>
-            ${isOrdered}
-            ${updateAudioTrackError}
+            <b>${isOrdered}</b>
+            <b>${updateAudioTrackError}</b>
             <br>
         </div>
     </div>
@@ -143,7 +156,7 @@
         <div class="col-md-6 text-center">
             <div class="widget-area no-padding blank">
                 <div class="status-upload">
-                    <form method="POST" action="${pageContext.request.contextPath}/web">
+                    <form method="POST" onsubmit="return checkFeedback()" action="${pageContext.request.contextPath}/web">
                         <input type="hidden" name="command" value="comment_add">
                         <textarea placeholder="<fmt:message key="page.trackInfo.commentPlaceholder"/>" name="text"></textarea>
                         ${mistakeComment}

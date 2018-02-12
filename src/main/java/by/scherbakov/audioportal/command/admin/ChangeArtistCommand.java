@@ -8,6 +8,13 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code ChangeArtistCommand} is used to change artist
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class ChangeArtistCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";
     private static final String ADMIN_ROLE = "admin";
@@ -27,7 +34,7 @@ public class ChangeArtistCommand implements ActionCommand {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
             AudioTrack track = (AudioTrack) requestContent.getSessionAttributeValue(TRACK_ATTRIBUTE);
-            String artist = requestContent.getReguestParameterValue(ARTIST_PARAMETER);
+            String artist = requestContent.getRequestParameterValue(ARTIST_PARAMETER);
             track.setArtist(artist);
             AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
             String message = audioTrackLogic.updateAudioTrack(track);

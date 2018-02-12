@@ -12,7 +12,10 @@
         <ul class="nav navbar-nav">
             <li><a href="${pageContext.request.contextPath}/jsp/user/about.jsp"><fmt:message key="page.header.about"/></a></li>
         </ul>
-        <form class="navbar-form navbar-left" action="${pageContext.request.contextPath}/web">
+        <ul class="nav navbar-nav">
+            <li><a href="${pageContext.request.contextPath}/web?command=assembly_list"><fmt:message key="page.header.assembly"/></a></li>
+        </ul>
+        <form class="navbar-form navbar-left" onsubmit="return checkFindText()" action="${pageContext.request.contextPath}/web">
             <input type="hidden" name="command" value="find"/>
             <div class="form-group">
                 <input type="text" class="form-control" name="findText" placeholder=<fmt:message key="page.header.findPlaceholder"/>>
@@ -53,6 +56,9 @@
         </a>
         <a href="${pageContext.request.contextPath}/web?command=all_clients">
             <button type="submit" class = "btn"><fmt:message key="page.main.clients"/></button>
+        </a>
+        <a href="${pageContext.request.contextPath}/jsp/admin/add_assembly.jsp">
+            <button type="submit" class = "btn"><fmt:message key="page.main.newAssembly"/></button>
         </a>
     </div>
     </div>

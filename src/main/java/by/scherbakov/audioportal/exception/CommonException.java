@@ -1,5 +1,11 @@
 package by.scherbakov.audioportal.exception;
 
+/**
+ * {@code CommonException} is used to store Common level exceptions.
+ *
+ * @author ScherbakovIlia
+ * @see Exception
+ */
 public class CommonException extends Exception {
     public CommonException() {
         super();

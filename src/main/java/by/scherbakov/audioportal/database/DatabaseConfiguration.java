@@ -3,6 +3,12 @@ package by.scherbakov.audioportal.database;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * {@code DatabaseConfiguration} related with initializing params for database
+ *
+ * @author ScherbakovIlia
+ */
+
 public class DatabaseConfiguration {
     private final String URL;
     private final String USER;
@@ -21,18 +27,38 @@ public class DatabaseConfiguration {
         }
     }
 
+    /**
+     * Retrieved URL to initialize database
+     *
+     * @return url
+     */
     public String getURL() {
         return URL;
     }
 
+    /**
+     * Retrieved user to initialize database
+     *
+     * @return user
+     */
     public String getUser() {
         return USER;
     }
 
+    /**
+     * Retrieved password to initialize database
+     *
+     * @return password
+     */
     public String getPassword() {
         return PASSWORD;
     }
 
+    /**
+     * Retrieved pool size to initialize database
+     *
+     * @return pool size
+     */
     public int getPoolSize() {
         return POOL_SIZE;
     }

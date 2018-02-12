@@ -2,11 +2,18 @@ package by.scherbakov.audioportal.command.account;
 
 import by.scherbakov.audioportal.command.ActionCommand;
 import by.scherbakov.audioportal.entity.User;
-import by.scherbakov.audioportal.logic.AudioTrackLogic;
 import by.scherbakov.audioportal.logic.UserLogic;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
+
+/**
+ * Class {@code ChangeLoginCommand} is used to change
+ * user's login
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
 
 public class ChangeLoginCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
@@ -22,8 +29,8 @@ public class ChangeLoginCommand implements ActionCommand {
     public String execute(SessionRequestContent requestContent) {
         String page = null;
         String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
-        if(SIGN_IN_VALUE.equals(isSignIn)) {
-            String newLogin = requestContent.getReguestParameterValue(NICKNAME_PARAMETER);
+        if (SIGN_IN_VALUE.equals(isSignIn)) {
+            String newLogin = requestContent.getRequestParameterValue(NICKNAME_PARAMETER);
             User user = (User) requestContent.getSessionAttributeValue(USER_ATTRIBUTE);
             UserLogic userLogic = new UserLogic();
             String message = userLogic.changeLogin(user.getLogin(), newLogin);
@@ -36,7 +43,7 @@ public class ChangeLoginCommand implements ActionCommand {
                 requestContent.setSessionAttributeValue(USER_ATTRIBUTE, user);
             }
             page = ConfigurationManager.getProperty(ACCOUNT_PAGE);
-        }else {
+        } else {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         }
         return page;

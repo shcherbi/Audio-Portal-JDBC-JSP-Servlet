@@ -167,6 +167,36 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Таблица, позволяющая группировать заказы клиентов музыкального магаизна. Где по столбцу \"idOrder\" будет заказ, а по столбцу \"idAudio_Track\" будет песня. Использована связь \"многие к многим\", так как у одного заказа может быть много песен и у одной песни может быть множество заказов.';
 
+-- -----------------------------------------------------
+-- Table `audio_portal`.`assembly`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `audio_portal`.`assembly` (
+  `idAssembly` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`idAssembly`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `audio_portal`.`assembly_list`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `audio_portal`.`assembly_list` (
+  `idAssembly` INT NOT NULL,
+  `idAudio_Track` INT NOT NULL,
+  PRIMARY KEY (`idAssembly`, `idAudio_Track`),
+  INDEX `fk_assembly_has_audio_track_audio_track1_idx` (`idAudio_Track` ASC),
+  INDEX `fk_assembly_has_audio_track_assembly1_idx` (`idAssembly` ASC),
+  CONSTRAINT `fk_assembly_has_audio_track_assembly1`
+    FOREIGN KEY (`idAssembly`)
+    REFERENCES `audio_portal`.`assembly` (`idAssembly`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_assembly_has_audio_track_audio_track1`
+    FOREIGN KEY (`idAudio_Track`)
+    REFERENCES `audio_portal`.`audio_track` (`idAudio_Track`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

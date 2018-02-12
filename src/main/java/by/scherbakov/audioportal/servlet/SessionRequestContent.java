@@ -6,11 +6,33 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class {@code SessionRequestContent} is used to get and store all request parameters,
+ * session ans request attributes.
+ *
+ * @author ScherbakovIlia
+ * @see HttpServletRequest
+ */
+
 public class SessionRequestContent {
+    /**
+     * Servlet request's attributes
+     */
     private Map<String, Object> requestAttributes;
+    /**
+     * Servlet request's parameters
+     */
     private Map<String, String[]> requestParameters;
+    /**
+     * Servlet request's session attribute
+     */
     private Map<String, Object> sessionAttributes;
 
+    /**
+     * Store request and session attributes to HashMap
+     *
+     * @param request is servlet's request
+     */
     public void extractValues(HttpServletRequest request) {
         requestParameters = request.getParameterMap();
         Enumeration<String> attributeNames = null;
@@ -29,6 +51,11 @@ public class SessionRequestContent {
         }
     }
 
+    /**
+     * Sets all request and session attributes to request
+     *
+     * @param request is servlet's request
+     */
     public void insertValues(HttpServletRequest request) {
         for (Map.Entry<String, Object> requestAttribute : requestAttributes.entrySet()) {
             request.setAttribute(requestAttribute.getKey(), requestAttribute.getValue());
@@ -38,45 +65,46 @@ public class SessionRequestContent {
         }
     }
 
-    public String getReguestParameterValue(String key) {
+    /**
+     * Gets parameter value by key
+     *
+     * @param key is parameter's key
+     * @return value
+     */
+    public String getRequestParameterValue(String key) {
         if (requestParameters.isEmpty()) {
             return "";
         }
         return requestParameters.containsKey(key) ? requestParameters.get(key)[0] : "";
     }
+
+    /**
+     * Sets session attribute with key and value to HashMap
+     *
+     * @param key   is session attribute's key
+     * @param value is session attribute's value
+     */
     public void setSessionAttributeValue(String key, Object value) {
         sessionAttributes.put(key, value);
     }
+
+    /**
+     * Gets session attribute by key
+     *
+     * @param key is session attribute's key
+     * @return value
+     */
     public Object getSessionAttributeValue(String key) {
         return sessionAttributes.get(key);
     }
+
+    /**
+     * Sets request attribute with key and value to HashMap
+     *
+     * @param key   is request attribute's key
+     * @param value is request attribute's value
+     */
     public void setRequestAttributeValue(String key, Object value) {
         requestAttributes.put(key, value);
-    }
-    public void getRequestAttributeValue(String key) {
-        requestAttributes.get(key);
-    }
-    public Map<String, Object> getRequestAttributes() {
-        return requestAttributes;
-    }
-
-    public void setRequestAttributes(Map<String, Object> requestAttributes) {
-        this.requestAttributes = requestAttributes;
-    }
-
-    public Map<String, String[]> getRequestParameters() {
-        return requestParameters;
-    }
-
-    public void setRequestParameters(Map<String, String[]> requestParameters) {
-        this.requestParameters = requestParameters;
-    }
-
-    public Map<String, Object> getSessionAttributes() {
-        return sessionAttributes;
-    }
-
-    public void setSessionAttributes(Map<String, Object> sessionAttributes) {
-        this.sessionAttributes = sessionAttributes;
     }
 }

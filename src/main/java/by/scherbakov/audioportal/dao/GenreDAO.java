@@ -1,8 +1,6 @@
 package by.scherbakov.audioportal.dao;
 
 import by.scherbakov.audioportal.database.ConnectionPool;
-import by.scherbakov.audioportal.entity.Album;
-import by.scherbakov.audioportal.entity.Comment;
 import by.scherbakov.audioportal.entity.Genre;
 import by.scherbakov.audioportal.exception.CommonException;
 import org.apache.logging.log4j.Level;
@@ -10,13 +8,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class GenreDAO extends AbstractDAO<Genre> {
+/**
+ * Class {@code GenreDAO} is used to connect with data base.
+ * Does all actions related with genres.
+ *
+ * @author ScherbakovIlia
+ * @see AbstractDAO
+ */
+
+public class GenreDAO implements AbstractDAO<Genre> {
     public static final Logger LOGGER = LogManager.getLogger(GenreDAO.class);
 
     private static final String GENRE_ID = "idGenre";
@@ -39,9 +42,7 @@ public class GenreDAO extends AbstractDAO<Genre> {
             statement = connection.prepareStatement(SQL_SELECT_ALL_GENRES);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt(GENRE_ID);
-                String trackGenre = resultSet.getString(GENRE);
-                Genre genre = new Genre(id, trackGenre);
+                Genre genre = createGenre(resultSet);
                 genres.add(genre);
             }
             LOGGER.log(Level.INFO, "Received all genres from the database");
@@ -70,8 +71,7 @@ public class GenreDAO extends AbstractDAO<Genre> {
             statement.setInt(1, idGenre);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String trackGenre = resultSet.getString(GENRE);
-                genre = new Genre(idGenre, trackGenre);
+                genre = createGenre(resultSet);
             }
             LOGGER.log(Level.INFO, "Received genre from the database");
         } catch (CommonException e) {
@@ -145,11 +145,39 @@ public class GenreDAO extends AbstractDAO<Genre> {
         return isDeleted;
     }
 
+    /**
+     * Create genre
+     *
+     * @param resultSet is data from database
+     * @return Genre object
+     * @see Genre
+     */
+    private Genre createGenre(ResultSet resultSet) throws SQLException {
+        Genre genre = null;
+        try {
+            if (resultSet == null) {
+                throw new CommonException();
+            }
+            int id = resultSet.getInt(GENRE_ID);
+            String trackGenre = resultSet.getString(GENRE);
+            genre = new Genre(id, trackGenre);
+        } catch (CommonException e) {
+            LOGGER.error("Invalid parameter.", e);
+        }
+        return genre;
+    }
+
+    /**
+     * Add genre to database
+     *
+     * @param genreName is genre name
+     * @return Genre object
+     * @see Genre
+     */
     public Genre addGenre(String genreName) {
         Genre genre=null;
         Connection connection = null;
         PreparedStatement statement = null;
-        boolean isAdded = false;
         try {
             if (genreName == null||genreName.isEmpty()) {
                 throw new CommonException();
@@ -177,6 +205,14 @@ public class GenreDAO extends AbstractDAO<Genre> {
         return genre;
     }
 
+    /**
+     * Check existence of genre and retrieve if exist
+     *
+     * @param genres    is collection of genres
+     * @param genreName    is genre name
+     * @return Genre object
+     * @see Genre
+     */
     private Genre checkAndGet(List<Genre> genres, String genreName){
         for (int i = 0; i<genres.size();i++){
             String currentGenreName= genres.get(i).getGenre();

@@ -3,6 +3,11 @@ package by.scherbakov.audioportal.manager;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Class {@code ConfigurationManager} is used to get messages according locale
+ *
+ * @author ScherbakovIlia
+ */
 public class MessageManager {
     private static final String RUSSIAN_LOCALE = "ru_RU";
     private static final String BELARUSIAN_LOCALE = "be_BE";

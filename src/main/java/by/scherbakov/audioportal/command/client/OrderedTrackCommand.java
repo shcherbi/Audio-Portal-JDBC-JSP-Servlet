@@ -4,12 +4,17 @@ import by.scherbakov.audioportal.command.ActionCommand;
 import by.scherbakov.audioportal.entity.AudioTrack;
 import by.scherbakov.audioportal.entity.User;
 import by.scherbakov.audioportal.logic.AudioTrackLogic;
-import by.scherbakov.audioportal.logic.OrderLogic;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
-import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
 import java.util.List;
+
+/**
+ * Class {@code OrderedTrackCommand} is used to view all user's ordered tracks
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
 
 public class OrderedTrackCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";

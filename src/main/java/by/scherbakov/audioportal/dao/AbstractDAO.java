@@ -2,12 +2,38 @@ package by.scherbakov.audioportal.dao;
 
 import java.util.List;
 
-public abstract class AbstractDAO<T> {
-    public abstract List<T> takeAll();
+/**
+ * Interface {@code AbstractDAO} is used for all dao implementations.
+ * Contain common abstract methods.
+ *
+ * @author ScherbakovIlia
+ */
+public interface AbstractDAO<T> {
+    /**
+     * Takes all entities from database
+     *
+     * @return collection of entities
+     */
+    List<T> takeAll();
 
-    public abstract T take(String id);
+    /**
+     * Takes entity by id from database
+     *
+     * @return entity
+     */
+    T take(String id);
 
-    public abstract boolean update(T object);
+    /**
+     * Updates entity in database
+     *
+     * @return {@code true} if entity is up to date. {@code false} if entity isn't up to date.
+     */
+    boolean update(T object);
 
-    public abstract boolean delete(T object);
+    /**
+     * Delete entity in database
+     *
+     * @return {@code true} if entity is deleted. {@code false} if entity isn't deleted.
+     */
+    boolean delete(T object);
 }

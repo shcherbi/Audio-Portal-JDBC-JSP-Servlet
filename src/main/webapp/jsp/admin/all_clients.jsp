@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/headerStyle.css">
     <link rel="stylesheet" href="../../css/trackStyle.css">
+    <script rel="script" src="../../js/jquery-3.3.1.min.js"></script>
+    <script rel="script" src="../../js/validator.js"></script>
     <title><fmt:message key="page.allClients.title"/></title>
 </head>
 <body>
@@ -44,15 +46,15 @@
                     <a href="${pageContext.request.contextPath}/web?command=grant_user&login=${client.login}">
                         <fmt:message key="page.allClients.grant"/>
                     </a>
-                    <form action="${pageContext.request.contextPath}/web?command=set_bonus&login=${client.login}" method="POST">
-                        <input type="text" class="form-control" name="findText" placeholder=<fmt:message key="page.allClients.bonus"/>>
+                    <form onsubmit="return checkBonus()" action="${pageContext.request.contextPath}/web?command=set_bonus&login=${client.login}" method="POST">
+                        <input type="text" class="form-control" name="bonus" placeholder=<fmt:message key="page.allClients.bonus"/>>
                         <button type="submit" name="setBonusButton" class="btn"><fmt:message key="page.allClients.bonusAdd"/></button>
                     </form>
                     <a href="${pageContext.request.contextPath}/web?command=delete_user&login=${client.login}">
                         <fmt:message key="page.allClients.delete"/>
                     </a>
                     <br>
-                    ${adminFunctionalError}
+                    <b>${adminFunctionalError}<b>
                 </div>
             </div>
         </c:forEach>

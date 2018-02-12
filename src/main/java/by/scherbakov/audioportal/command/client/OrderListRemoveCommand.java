@@ -9,6 +9,13 @@ import by.scherbakov.audioportal.servlet.SessionRequestContent;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class {@code OrderListRemoveCommand} is used to remove audio track to order list
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class OrderListRemoveCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
     private static final String SIGN_IN_VALUE = "true";
@@ -22,7 +29,7 @@ public class OrderListRemoveCommand implements ActionCommand {
         String page = null;
         String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
         if(SIGN_IN_VALUE.equals(isSignIn)) {
-            String idTrack = requestContent.getReguestParameterValue(TRACK_ATTRIBUTE);
+            String idTrack = requestContent.getRequestParameterValue(TRACK_ATTRIBUTE);
             AudioTrackLogic trackLogic = new AudioTrackLogic();
             AudioTrack audioTrack = trackLogic.takeTrackById(idTrack);
             Set orderList = (HashSet) requestContent.getSessionAttributeValue(ORDER_LIST_ATTRIBUTE);

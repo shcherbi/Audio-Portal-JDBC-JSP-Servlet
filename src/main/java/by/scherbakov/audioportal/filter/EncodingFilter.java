@@ -5,6 +5,12 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
+
+/**
+ * Class {@code EncodingFilter} is used to set up encoding to pages
+ *
+ * @author ScherbakovIlia
+ */
 @WebFilter(filterName ="EncodingFilter",
         initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Setting WebApp encoding")})
 public class EncodingFilter implements Filter {
@@ -12,7 +18,7 @@ public class EncodingFilter implements Filter {
     private String encode;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         encode = filterConfig.getInitParameter(ENCODING_PARAMETER);
     }
 

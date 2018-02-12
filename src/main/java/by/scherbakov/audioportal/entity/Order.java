@@ -3,6 +3,11 @@ package by.scherbakov.audioportal.entity;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Class {@code Order} is used to store Order entity.
+ *
+ * @author ScherbakovIlia
+ */
 public class Order {
     private int id;
     private String login;

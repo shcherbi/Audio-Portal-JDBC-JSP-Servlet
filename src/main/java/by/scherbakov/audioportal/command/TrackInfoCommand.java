@@ -4,11 +4,21 @@ import by.scherbakov.audioportal.entity.Album;
 import by.scherbakov.audioportal.entity.AudioTrack;
 import by.scherbakov.audioportal.entity.Comment;
 import by.scherbakov.audioportal.entity.Genre;
+import by.scherbakov.audioportal.logic.AlbumLogic;
 import by.scherbakov.audioportal.logic.AudioTrackLogic;
+import by.scherbakov.audioportal.logic.CommentLogic;
+import by.scherbakov.audioportal.logic.GenreLogic;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
 import java.util.List;
+
+/**
+ * Class {@code TrackInfoCommand} is used to view track info
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
 
 public class TrackInfoCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
@@ -25,12 +35,15 @@ public class TrackInfoCommand implements ActionCommand {
         String page=null;
         String isSignIn = (String) requestContent.getSessionAttributeValue(SIGN_IN_ATTRIBUTE);
         if(SIGN_IN_VALUE.equals(isSignIn)) {
-            String idTrack = requestContent.getReguestParameterValue(TRACK_ATTRIBUTE);
+            String idTrack = requestContent.getRequestParameterValue(TRACK_ATTRIBUTE);
             AudioTrackLogic trackLogic = new AudioTrackLogic();
-            List<Comment> comments = trackLogic.takeAllCommentsById(Integer.parseInt(idTrack));
             AudioTrack track = trackLogic.takeTrackById(idTrack);
-            Album album = trackLogic.takeAlbumById(Integer.toString(track.getIdAlbum()));
-            Genre genre = trackLogic.takeGenreById(Integer.toString(track.getIdGenre()));
+            AlbumLogic albumLogic = new AlbumLogic();
+            Album album = albumLogic.takeAlbumById(Integer.toString(track.getIdAlbum()));
+            GenreLogic genreLogic = new GenreLogic();
+            Genre genre = genreLogic.takeGenreById(Integer.toString(track.getIdGenre()));
+            CommentLogic commentLogic = new CommentLogic();
+            List<Comment> comments = commentLogic.takeAllCommentsById(Integer.parseInt(idTrack));
             requestContent.setRequestAttributeValue(GENRE_ATTRIBUTE, genre);
             requestContent.setRequestAttributeValue(ALBUM_ATTRIBUTE, album);
             requestContent.setSessionAttributeValue(TRACK_ATTRIBUTE, track);

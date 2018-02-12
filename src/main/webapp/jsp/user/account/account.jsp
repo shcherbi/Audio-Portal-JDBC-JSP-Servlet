@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../css/menuStyle.css">
     <link rel="stylesheet" href="../../../css/accountStyle.css">
+    <script rel="script" src="../../js/jquery-3.3.1.min.js"></script>
+    <script rel="script" src="../../js/validator.js"></script>
     <title><fmt:message key="page.menu.myAccount"/></title>
 </head>
 <body>
@@ -36,7 +38,7 @@
     <hr>
     <div class="row">
         <div class="col-sm-4">
-            <form method="POST" action="${pageContext.request.contextPath}/web?command=change_login">
+            <form method="POST" onsubmit="return checkNewLogin()" action="${pageContext.request.contextPath}/web?command=change_login">
                 <input type="text" name="nickname" class="form-control" placeholder="<fmt:message key="page.account.newLogin"/>">
                 <br>
                 <br>
@@ -44,10 +46,10 @@
                     <fmt:message key="page.account.change"/>
                 </button>
             </form>
-            ${changeLoginError}
+            <b>${changeLoginError}</b>
         </div>
         <div class="col-sm-4">
-            <form method="POST" action="${pageContext.request.contextPath}/web?command=change_email">
+            <form method="POST" onsubmit="return checkNewEmail()" action="${pageContext.request.contextPath}/web?command=change_email">
                 <input type="text" name="email" class="form-control" placeholder="<fmt:message key="page.account.newEmail"/>">
                 <br>
                 <br>
@@ -55,10 +57,10 @@
                     <fmt:message key="page.account.change"/>
                 </button>
             </form>
-            ${changeEmailError}
+            <b>${changeEmailError}</b>
         </div>
         <div class="col-sm-4">
-            <form method="POST" action="${pageContext.request.contextPath}/web?command=change_password">
+            <form method="POST" onsubmit="return checkNewPassword()" action="${pageContext.request.contextPath}/web?command=change_password">
                 <input type="text" name="password" class="form-control" placeholder="<fmt:message key="page.account.newPassword"/>">
                 <br>
                 <br>
@@ -66,7 +68,7 @@
                     <fmt:message key="page.account.change"/>
                 </button>
             </form>
-            ${changePasswordError}
+            <b>${changePasswordError}</b>
         </div>
     </div>
 </div>

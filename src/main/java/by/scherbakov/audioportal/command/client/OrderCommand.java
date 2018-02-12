@@ -7,10 +7,16 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+/**
+ * Class {@code OrderCommand} is used to add order
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
 
 public class OrderCommand implements ActionCommand {
     private static final String SIGN_IN_ATTRIBUTE = "isSignIn";
@@ -20,7 +26,6 @@ public class OrderCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";
     private static final String CARD_NUMBER_PARAMETER = "cardNumber";
     private static final String SVC_PARAMETER = "svcCode";
-    private static final String DATE_PATTERN = "YYYY-MM-dd";
     private static final String LOCALE_ATTRIBUTE = "local";
     private static final String PURCHASE_REJECTED_ATTRIBUTE = "purchaseRejected";
     private static final String PRE_ORDER_PAGE = "/web?command=pre_order";
@@ -34,14 +39,12 @@ public class OrderCommand implements ActionCommand {
         if(SIGN_IN_VALUE.equals(isSignIn)) {
             User user = (User) requestContent.getSessionAttributeValue(USER_ATTRIBUTE);
             String login = user.getLogin();
-            String cardNumber = requestContent.getReguestParameterValue(CARD_NUMBER_PARAMETER);
-            String svcCode = requestContent.getReguestParameterValue(SVC_PARAMETER);
+            String cardNumber = requestContent.getRequestParameterValue(CARD_NUMBER_PARAMETER);
+            String svcCode = requestContent.getRequestParameterValue(SVC_PARAMETER);
             Set orderList = (HashSet) requestContent.getSessionAttributeValue(ORDER_LIST_ATTRIBUTE);
             Date date = new Date();
-            SimpleDateFormat format = new SimpleDateFormat(DATE_PATTERN);
-            String formatDate = format.format(date);
             OrderLogic orderLogic = new OrderLogic();
-            if (orderLogic.addOrderList(login, cardNumber, svcCode, formatDate, orderList)) {
+            if (orderLogic.addOrderList(login, cardNumber, svcCode, date, orderList)) {
                 orderList.clear();
                 requestContent.setSessionAttributeValue(ORDER_LIST_ATTRIBUTE, orderList);
                 page = MAIN_PAGE;

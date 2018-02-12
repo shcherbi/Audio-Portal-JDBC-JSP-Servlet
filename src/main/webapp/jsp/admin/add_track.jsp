@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/registerStyle.css">
+    <script rel="script" src="../../js/jquery-3.3.1.min.js"></script>
+    <script rel="script" src="../../js/validator.js"></script>
     <title><fmt:message key="page.addTrack.title"/></title>
 </head>
 <body>
@@ -21,7 +23,7 @@
     <br><br><br>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <form class="form-register" action="${pageContext.request.contextPath}/web" method="POST">
+            <form class="form-register" onsubmit="return checkAudioTrack()" action="${pageContext.request.contextPath}/web" method="POST">
                 <input type="hidden" name="command" value="add_audio_track"/>
                 <input type="text" name="name" class="form-control"
                        placeholder="<fmt:message key="page.addTrack.name"/>">

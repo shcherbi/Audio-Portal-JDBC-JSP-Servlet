@@ -7,6 +7,15 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code AddGenreCommand} is used to add
+ * genre
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
+
 public class AddGenreCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";
     private static final String ADMIN_ROLE = "admin";
@@ -21,10 +30,10 @@ public class AddGenreCommand implements ActionCommand {
     public String execute(SessionRequestContent requestContent) {
         String page = null;
         User user = (User) requestContent.getSessionAttributeValue(USER_ATTRIBUTE);
-        if (user==null) {
+        if (user == null) {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
-            String genre = requestContent.getReguestParameterValue(GENRE_PARAMETER);
+            String genre = requestContent.getRequestParameterValue(GENRE_PARAMETER);
             GenreLogic genreLogic = new GenreLogic();
             boolean isAdded = genreLogic.addGenre(genre);
             if (!isAdded) {

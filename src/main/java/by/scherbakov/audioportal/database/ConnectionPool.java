@@ -11,6 +11,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * {@code ConnectionPool} class represents an ability to connect with
+ * database.
+ *
+ * @author ScherbakovIlia
+ */
+
 public class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
     private static ConnectionPool connectionPool;
@@ -19,6 +26,10 @@ public class ConnectionPool {
     private static ReentrantLock threadLock = new ReentrantLock();
     private static final DatabaseConfiguration DB_CONFIG = new DatabaseConfiguration();
 
+    /**
+     * Creates an entity of {@code ConnectionPool}.
+     * Fills the BlockingQueue with connections.
+     */
     private ConnectionPool() {
         connectionQueue = new ArrayBlockingQueue<>(DB_CONFIG.getPoolSize());
         try {
@@ -31,6 +42,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Creates connection pool or take it if it is already exist.
+     *
+     * @return ConnectionPool object.
+     */
     public static ConnectionPool getInstance() {
         if (!instanceExist.get()) {
             threadLock.lock();
@@ -46,6 +62,9 @@ public class ConnectionPool {
         return connectionPool;
     }
 
+    /**
+     * Adds Connection to the BlockingQueue of connections.
+     */
     private void addConnection() {
         try {
             Connection connection = DriverManager.getConnection(DB_CONFIG.getURL(), DB_CONFIG.getUser(),
@@ -56,6 +75,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Takes Connection from the pool
+     *
+     * @return Connection object
+     */
     public Connection takeConnection() {
         Connection connection = null;
         try {
@@ -66,6 +90,11 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Returns Connection to the pool
+     *
+     * @param connection is Connection object
+     */
     public void closeConnection(Connection connection) {
         try {
             connectionQueue.put(connection);
@@ -74,6 +103,9 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Closes pool by closing all connections in a pool
+     */
     public void closePool() {
         try {
             for (int i = 0; i < DB_CONFIG.getPoolSize(); i++) {

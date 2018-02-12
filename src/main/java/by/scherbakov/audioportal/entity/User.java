@@ -3,6 +3,11 @@ package by.scherbakov.audioportal.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Class {@code User} is used to store User entity.
+ *
+ * @author ScherbakovIlia
+ */
 public class User implements Serializable {
     private String login;
     private String password;

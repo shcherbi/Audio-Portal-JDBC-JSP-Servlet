@@ -8,11 +8,19 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code DeleteTrackCommand} is used to delete
+ * audio track
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class DeleteTrackCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";
     private static final String ADMIN_ROLE = "admin";
     private static final String LOGIN_PAGE = "path.page.login";
-    private static final String TRACK_PARAMETER = "track";
+    private static final String TRACK_ATTRIBUTE = "track";
     private static final String LOCALE_ATTRIBUTE = "locale";
     private static final String MISTAKE_ATTRIBUTE = "updateAudioTrackError";
     private static final String TRACK_PAGE_ACTION = "/web?command=track_info&track=";
@@ -25,7 +33,7 @@ public class DeleteTrackCommand implements ActionCommand {
         if (user == null) {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
-            AudioTrack audioTrack = (AudioTrack) requestContent.getSessionAttributeValue(TRACK_PARAMETER);
+            AudioTrack audioTrack = (AudioTrack) requestContent.getSessionAttributeValue(TRACK_ATTRIBUTE);
             AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
             String message = audioTrackLogic.deleteAudioTrack(audioTrack);
             if (!message.isEmpty()) {
@@ -36,7 +44,7 @@ public class DeleteTrackCommand implements ActionCommand {
             } else {
                 page = MAIN_PAGE_ACTION;
             }
-        }else {
+        } else {
             page = MAIN_PAGE_ACTION;
         }
         return page;

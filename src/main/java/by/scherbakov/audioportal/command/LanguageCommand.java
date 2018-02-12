@@ -3,6 +3,13 @@ package by.scherbakov.audioportal.command;
 import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code LanguageCommand} is used to change language in session
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class LanguageCommand implements ActionCommand {
     private static final String LANGUAGE_PARAMETER = "lang";
     private static final String LOCALE_ATTRIBUTE = "locale";
@@ -15,7 +22,7 @@ public class LanguageCommand implements ActionCommand {
     @Override
     public String execute(SessionRequestContent requestContent) {
         String page = null;
-        String newLocale = requestContent.getReguestParameterValue(LANGUAGE_PARAMETER);
+        String newLocale = requestContent.getRequestParameterValue(LANGUAGE_PARAMETER);
         if (newLocale != null) {
             requestContent.setSessionAttributeValue(LOCALE_ATTRIBUTE, newLocale);
         }

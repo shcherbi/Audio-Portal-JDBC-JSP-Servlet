@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../../css/headerStyle.css">
     <link rel="stylesheet" href="../../css/trackStyle.css">
     <link rel="stylesheet" href="../../css/footerStyle.css">
+    <script rel="script" src="../../js/jquery-3.3.1.min.js"></script>
+    <script rel="script" src="../../js/validator.js"></script>
     <title><fmt:message key="page.trackInfo.title"/></title>
 </head>
 <body>
@@ -56,7 +58,7 @@
             </c:if>
             <c:if test="${!orderList.isEmpty()}">
                 <fmt:message key="page.preOrder.infoText"/>
-                <form method="POST" action="${pageContext.request.contextPath}/web">
+                <form method="POST" onsubmit="return checkCard()" action="${pageContext.request.contextPath}/web">
                     <input type="hidden" name="command" value="order"/>
                     <div class="form-group">
                         <br>

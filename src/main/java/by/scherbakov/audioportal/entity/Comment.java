@@ -3,6 +3,11 @@ package by.scherbakov.audioportal.entity;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Class {@code Comment} is used to store Comment entity.
+ *
+ * @author ScherbakovIlia
+ */
 public class Comment {
     private int id;
     private int idAudioTrack;

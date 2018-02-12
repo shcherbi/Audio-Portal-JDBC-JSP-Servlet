@@ -8,6 +8,13 @@ import by.scherbakov.audioportal.manager.ConfigurationManager;
 import by.scherbakov.audioportal.manager.MessageManager;
 import by.scherbakov.audioportal.servlet.SessionRequestContent;
 
+/**
+ * Class {@code ChangeTrackNameCommand} is used to change track name
+ *
+ * @author ScherbakovIlia
+ * @see ActionCommand
+ */
+
 public class ChangeTrackNameCommand implements ActionCommand {
     private static final String USER_ATTRIBUTE = "user";
     private static final String ADMIN_ROLE = "admin";
@@ -27,7 +34,7 @@ public class ChangeTrackNameCommand implements ActionCommand {
             page = ConfigurationManager.getProperty(LOGIN_PAGE);
         } else if (ADMIN_ROLE.equals(user.getRole())) {
             AudioTrack track = (AudioTrack) requestContent.getSessionAttributeValue(TRACK_ATTRIBUTE);
-            String trackName = requestContent.getReguestParameterValue(NAME_PARAMETER);
+            String trackName = requestContent.getRequestParameterValue(NAME_PARAMETER);
             track.setName(trackName);
             AudioTrackLogic audioTrackLogic = new AudioTrackLogic();
             String message = audioTrackLogic.updateAudioTrack(track);
@@ -37,7 +44,7 @@ public class ChangeTrackNameCommand implements ActionCommand {
                 requestContent.setRequestAttributeValue(MISTAKE_ATTRIBUTE, errorMessage);
             }
             page = TRACK_PAGE_ACTION + track.getId();
-        }else {
+        } else {
             page = MAIN_PAGE_ACTION;
         }
         return page;
