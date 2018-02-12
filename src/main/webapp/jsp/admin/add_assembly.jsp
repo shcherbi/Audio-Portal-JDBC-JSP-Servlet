@@ -23,7 +23,7 @@
     <br><br><br>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <form class="form-register" onsubmit="return checkAssembly()" action="${pageContext.request.contextPath}/web" method="POST">
+            <form autocomplete="off" class="form-register" onsubmit="return checkAssembly()" action="${pageContext.request.contextPath}/web" method="POST">
                 <input type="hidden" name="command" value="add_assembly"/>
                 <input type="text" name="assembly" class="form-control"
                        placeholder="<fmt:message key="page.addAssembly.assembly"/>">

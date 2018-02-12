@@ -33,7 +33,7 @@
                 <br>
                 <b><fmt:message key="page.trackInfo.price"/>: </b><c:out value="${track.price}"/>
                 <br>
-                <a href="${pageContext.request.contextPath}/web?command=order_list_remove?track=${track.id}">
+                <a href="${pageContext.request.contextPath}/web?command=order_list_remove&track=${track.id}">
                     <button type="submit" name="cancelOrderButton" class="btn">
                         X
                     </button>
@@ -58,7 +58,7 @@
             </c:if>
             <c:if test="${!orderList.isEmpty()}">
                 <fmt:message key="page.preOrder.infoText"/>
-                <form method="POST" onsubmit="return checkCard()" action="${pageContext.request.contextPath}/web">
+                <form autocomplete="off" method="POST" onsubmit="return checkCard()" action="${pageContext.request.contextPath}/web">
                     <input type="hidden" name="command" value="order"/>
                     <div class="form-group">
                         <br>

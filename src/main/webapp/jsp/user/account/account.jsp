@@ -38,7 +38,7 @@
     <hr>
     <div class="row">
         <div class="col-sm-4">
-            <form method="POST" onsubmit="return checkNewLogin()" action="${pageContext.request.contextPath}/web?command=change_login">
+            <form autocomplete="off" method="POST" onsubmit="return checkNewLogin()" action="${pageContext.request.contextPath}/web?command=change_login">
                 <input type="text" name="nickname" class="form-control" placeholder="<fmt:message key="page.account.newLogin"/>">
                 <br>
                 <br>
@@ -49,7 +49,7 @@
             <b>${changeLoginError}</b>
         </div>
         <div class="col-sm-4">
-            <form method="POST" onsubmit="return checkNewEmail()" action="${pageContext.request.contextPath}/web?command=change_email">
+            <form autocomplete="off" method="POST" onsubmit="return checkNewEmail()" action="${pageContext.request.contextPath}/web?command=change_email">
                 <input type="text" name="email" class="form-control" placeholder="<fmt:message key="page.account.newEmail"/>">
                 <br>
                 <br>
@@ -60,7 +60,7 @@
             <b>${changeEmailError}</b>
         </div>
         <div class="col-sm-4">
-            <form method="POST" onsubmit="return checkNewPassword()" action="${pageContext.request.contextPath}/web?command=change_password">
+            <form autocomplete="off" method="POST" onsubmit="return checkNewPassword()" action="${pageContext.request.contextPath}/web?command=change_password">
                 <input type="text" name="password" class="form-control" placeholder="<fmt:message key="page.account.newPassword"/>">
                 <br>
                 <br>

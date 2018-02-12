@@ -23,7 +23,7 @@
     <br><br><br>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <form onsubmit="return checkAlbum()" class="form-register" action="${pageContext.request.contextPath}/web" method="POST">
+            <form autocomplete="off" onsubmit="return checkAlbum()" class="form-register" action="${pageContext.request.contextPath}/web" method="POST">
                 <input type="hidden" name="command" value="add_album"/>
                 <input type="text" name="album" class="form-control"
                        placeholder="<fmt:message key="page.addTrack.album"/>">

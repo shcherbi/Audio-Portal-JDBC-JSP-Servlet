@@ -15,7 +15,7 @@
         <ul class="nav navbar-nav">
             <li><a href="${pageContext.request.contextPath}/web?command=assembly_list"><fmt:message key="page.header.assembly"/></a></li>
         </ul>
-        <form class="navbar-form navbar-left" onsubmit="return checkFindText()" action="${pageContext.request.contextPath}/web">
+        <form autocomplete="off" method="POST" class="navbar-form navbar-left" onsubmit="return checkFindText()" action="${pageContext.request.contextPath}/web">
             <input type="hidden" name="command" value="find"/>
             <div class="form-group">
                 <input type="text" class="form-control" name="findText" placeholder=<fmt:message key="page.header.findPlaceholder"/>>

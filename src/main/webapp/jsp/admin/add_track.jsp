@@ -23,7 +23,7 @@
     <br><br><br>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <form class="form-register" onsubmit="return checkAudioTrack()" action="${pageContext.request.contextPath}/web" method="POST">
+            <form autocomplete="off" class="form-register" onsubmit="return checkAudioTrack()" action="${pageContext.request.contextPath}/web" method="POST">
                 <input type="hidden" name="command" value="add_audio_track"/>
                 <input type="text" name="name" class="form-control"
                        placeholder="<fmt:message key="page.addTrack.name"/>">

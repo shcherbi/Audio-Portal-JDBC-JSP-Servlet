@@ -46,7 +46,7 @@
                     <a href="${pageContext.request.contextPath}/web?command=grant_user&login=${client.login}">
                         <fmt:message key="page.allClients.grant"/>
                     </a>
-                    <form onsubmit="return checkBonus()" action="${pageContext.request.contextPath}/web?command=set_bonus&login=${client.login}" method="POST">
+                    <form autocomplete="off" onsubmit="return checkBonus()" action="${pageContext.request.contextPath}/web?command=set_bonus&login=${client.login}" method="POST">
                         <input type="text" class="form-control" name="bonus" placeholder=<fmt:message key="page.allClients.bonus"/>>
                         <button type="submit" name="setBonusButton" class="btn"><fmt:message key="page.allClients.bonusAdd"/></button>
                     </form>

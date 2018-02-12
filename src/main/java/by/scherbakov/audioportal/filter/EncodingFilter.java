@@ -1,20 +1,20 @@
 package by.scherbakov.audioportal.filter;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
-import java.io.IOException;
-
+        import javax.servlet.*;
+        import javax.servlet.annotation.WebFilter;
+        import javax.servlet.annotation.WebInitParam;
+        import java.io.IOException;
 
 /**
  * Class {@code EncodingFilter} is used to set up encoding to pages
  *
  * @author ScherbakovIlia
  */
-@WebFilter(filterName ="EncodingFilter",
+
+@WebFilter(filterName = "EncodingFilter",
         initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Setting WebApp encoding")})
 public class EncodingFilter implements Filter {
-    private static final String ENCODING_PARAMETER="encoding";
+    private static final String ENCODING_PARAMETER = "encoding";
     private String encode;
 
     @Override
@@ -25,12 +25,9 @@ public class EncodingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        String currentEncode=servletRequest.getCharacterEncoding();
-        if(currentEncode != null &&!currentEncode.equalsIgnoreCase(encode)){
-            servletRequest.setCharacterEncoding(encode);
-            servletResponse.setCharacterEncoding(encode);
-        }
-        filterChain.doFilter(servletRequest,servletResponse);
+        servletRequest.setCharacterEncoding(encode);
+        servletResponse.setCharacterEncoding(encode);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

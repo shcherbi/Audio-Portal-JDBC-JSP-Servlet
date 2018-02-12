@@ -22,7 +22,7 @@
     <br><br><br>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <form class="form-register" onsubmit="return checkRegistration()" action="${pageContext.request.contextPath}/web" method="POST">
+            <form autocomplete="off" class="form-register" onsubmit="return checkRegistration()" action="${pageContext.request.contextPath}/web" method="POST">
                 <input type="hidden" name="command" value="registration" />
                 <input type="text" name="nickname" class="form-control" placeholder="<fmt:message key="page.registration.login"/>">
                 <br>

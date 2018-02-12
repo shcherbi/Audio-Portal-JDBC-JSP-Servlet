@@ -155,22 +155,24 @@ function checkFeedback() {
 }
 
 function checkCard() {
-    var inputAlbum= $("input[name='cardNumber']");
-    if(inputAlbum.val().length>=256) {
-        inputAlbum.css('border-color', 'red');
+    var inputCardNumber= $("input[name='cardNumber']");
+    if(inputCardNumber.val().length===0){
+        inputCardNumber.css('border-color','red');
         return false;
     }
-    if(inputAlbum.val().length===0){
-        inputAlbum.css('border-color','red');
+    var cardNumberReg = /\d{4}-?\d{4}-?\d{4}-?\d{4}/;
+    if(cardNumberReg.test(inputCardNumber.val())!==true){
+        inputCardNumber.css('border-color','red');
         return false;
     }
-    var inputStudio= $("input[name='svcCode']");
-    if(inputStudio.val().length>=256) {
-        inputStudio.css('border-color', 'red');
+    var inputSvcCode= $("input[name='svcCode']");
+    if(inputSvcCode.val().length===0){
+        inputSvcCode.css('border-color','red');
         return false;
     }
-    if(inputStudio.val().length===0){
-        inputStudio.css('border-color','red');
+    var svcReg = /^[0-9]{3,4}$/;
+    if(svcReg.test(inputSvcCode.val())!==true){
+        inputSvcCode.css('border-color','red');
         return false;
     }
     return true;
@@ -238,7 +240,7 @@ function checkBonus() {
         inputBonus.css('border-color','red');
         return false;
     }
-    var bonusReg = /[\d]+/;
+    var bonusReg = /^[0-9]*$/;
     if(bonusReg.test(inputBonus.val())!==true){
         inputBonus.css('border-color','red');
         return false;

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -128,6 +129,7 @@ public class OrderLogic {
             int bonusValue = Integer.parseInt(bonus);
             double newTotalPrice = totalPrice.doubleValue() - (totalPrice.doubleValue() * bonusValue / 100);
             totalPriceBonus = new BigDecimal(newTotalPrice);
+            totalPriceBonus = totalPriceBonus.setScale(2, RoundingMode.UP);
             LOGGER.log(Level.INFO, "Price with discount has been calculated");
         } catch (LogicException e) {
             LOGGER.error("Invalid parameters.");
