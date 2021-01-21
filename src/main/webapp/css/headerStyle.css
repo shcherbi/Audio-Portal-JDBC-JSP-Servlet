@@ -4,7 +4,7 @@
 }
 
 .navbar.navbar-default.navbar-fixed-top.admin {
-    margin-top: 3.6%;
+    margin-top: 3%;
 }
 
 .container.admin-menu{
@@ -18,14 +18,16 @@
 li a:hover {
     background-color: #98CA5A !important;
 }
+
 b.allGreen {
     color: #98CA5A !important;
 }
+
 .cart-brand {
     margin-top: 5px;
 }
+
 input[type="text"]:focus{
     border-color: #98CA5A;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(126, 239, 104, 0.6);
 }
-

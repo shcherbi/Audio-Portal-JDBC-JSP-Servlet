@@ -7,22 +7,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    <link rel="icon" href="../../images/logogreen.png">
+    <link rel="icon" href="${pageContext.request.contextPath}/images/logogreen.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/headerStyle.css">
-    <link rel="stylesheet" href="../css/registerStyle.css">
-    <link rel="stylesheet" href="../css/footerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/headerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/registerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footerStyle.css">
     <title><fmt:message key="page.error.title"/></title>
 </head>
 <body>
 <c:if test="${user ne null}">
-    <jsp:include page="common/header.jsp"/>
+    <jsp:include page="/jsp/common/header.jsp"/>
 </c:if>
 <div class="container text-center">
     <br><br>
     <c:if test="${user eq null}">
-        <a href="${pageContext.request.contextPath}/jsp/login.jsp"><img src="../images/logogreen.png" height="90px" width="105px"></a>
+        <a href="${pageContext.request.contextPath}/jsp/login.jsp"><img src="${pageContext.request.contextPath}/images/logogreen.png" height="90px" width="105px"></a>
     </c:if>
     <br><br><br>
     <div class="row">
@@ -38,6 +38,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="common/footer.jsp"/>
+<jsp:include page="/jsp/common/footer.jsp"/>
 </body>
 </html>

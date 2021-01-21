@@ -7,17 +7,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    <link rel="icon" href="../../../images/logogreen.png">
+    <link rel="icon" href="${pageContext.request.contextPath}/images/logogreen.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../css/menuStyle.css">
-    <link rel="stylesheet" href="../../../css/accountStyle.css">
-    <script rel="script" src="../../js/jquery-3.3.1.min.js"></script>
-    <script rel="script" src="../../js/validator.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menuStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/accountStyle.css">
+    <script rel="script" src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+    <script rel="script" src="${pageContext.request.contextPath}/js/validator.js"></script>
     <title><fmt:message key="page.menu.myAccount"/></title>
 </head>
 <body>
-<jsp:include page="../../../jsp/common/menu.jsp"/>
+<jsp:include page="/jsp/common/menu.jsp"/>
 <div class="container">
     <div class="row">
         <div class="col-sm-4">

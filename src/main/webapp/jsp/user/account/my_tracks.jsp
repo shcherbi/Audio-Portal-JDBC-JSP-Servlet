@@ -7,15 +7,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    <link rel="icon" href="../../images/logogreen.png">
+    <link rel="icon" href="${pageContext.request.contextPath}/images/logogreen.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/menuStyle.css">
-    <link rel="stylesheet" href="../../css/trackStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menuStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/trackStyle.css">
     <title><fmt:message key="page.menu.myTracks"/></title>
 </head>
 <body>
-<jsp:include page="../../../jsp/common/menu.jsp"/>
+<jsp:include page="/jsp/common/menu.jsp"/>
 <div class="container">
     <c:if test="${orderedTrack.isEmpty()}">
         <div class="col-xs-5 text-center">

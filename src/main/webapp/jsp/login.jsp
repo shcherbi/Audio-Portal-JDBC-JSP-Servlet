@@ -7,17 +7,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    <link rel="icon" href="../../images/logogreen.png">
+    <link rel="icon" href="${pageContext.request.contextPath}/images/logogreen.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/loginStyle.css">
-    <link rel="stylesheet" href="../css/footerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/loginStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footerStyle.css">
     <title><fmt:message key="page.login.title"/></title>
 </head>
 <body>
 <div class="navbar-fixed-top">
     <div class="jumbotron text-center">
-        <h1><img src="../images/logogreen.png" height="90px" width="105px">Imaginarium Music</h1>
+        <h1><img src="${pageContext.request.contextPath}/images/logogreen.png" height="90px" width="105px">Imaginarium Music</h1>
     </div>
 </div>
 <div class="container-fixed">
@@ -36,6 +36,6 @@
         <a href="${pageContext.request.contextPath}/jsp/register.jsp"><fmt:message key="page.login.registration"/></a>
     </form>
 </div>
-<jsp:include page="common/footer.jsp"/>
+<jsp:include page="/jsp/common/footer.jsp"/>
 </body>
 </html>

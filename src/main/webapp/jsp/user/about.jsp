@@ -8,13 +8,13 @@
     <meta name="viewport" content="width = device-width, initial-scale = 1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/headerStyle.css">
-    <link rel="stylesheet" href="../../css/aboutStyle.css">
-    <link rel="stylesheet" href="../../css/footerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/headerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/aboutStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footerStyle.css">
     <title><fmt:message key="page.about.title"/></title>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
+<jsp:include page="/jsp/common/header.jsp"/>
 <div class="container about">
     <div class="row">
         <div class="col-sm-8">
@@ -38,6 +38,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="/jsp/common/footer.jsp"/>
 </body>
 </html>

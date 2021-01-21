@@ -8,19 +8,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    <link rel="icon" href="../../images/logogreen.png">
+    <link rel="icon" href="${pageContext.request.contextPath}/images/logogreen.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/headerStyle.css">
-    <link rel="stylesheet" href="../../css/trackStyle.css">
-    <link rel="stylesheet" href="../../css/footerStyle.css">
-    <script rel="script" src="../../js/mainScript.js"></script>
-    <script rel="script" src="../../js/jquery-3.3.1.min.js"></script>
-    <script rel="script" src="../../js/validator.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/headerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/trackStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footerStyle.css">
+    <script rel="script" src="${pageContext.request.contextPath}/js/mainScript.js"></script>
+    <script rel="script" src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+    <script rel="script" src="${pageContext.request.contextPath}/js/validator.js"></script>
     <title><fmt:message key="page.trackInfo.title"/></title>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
+<jsp:include page="/jsp/common/header.jsp"/>
 <div class="container track">
     <div class="row">
         <div class="col-xs-5 text-center">
@@ -189,6 +189,6 @@
         </c:forEach>
     </div>
 </div>
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="/jsp/common/footer.jsp"/>
 </body>
 </html>

@@ -8,16 +8,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
-    <link rel="icon" href="../../images/logogreen.png">
+    <link rel="icon" href="${pageContext.request.contextPath}/images/logogreen.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/headerStyle.css">
-    <link rel="stylesheet" href="../../css/mainStyle.css">
-    <link rel="stylesheet" href="../../css/footerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/headerStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footerStyle.css">
     <title><fmt:message key="page.assemblyList.title"/></title>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"/>
+<jsp:include page="/jsp/common/header.jsp"/>
 <div class="findError">
     ${mistakeSongName}
 </div>

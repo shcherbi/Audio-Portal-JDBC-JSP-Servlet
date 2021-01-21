@@ -5,7 +5,7 @@
 <div class="navbar navbar-fixed-left">
     <div class="container text-center">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/jsp/user/account/account.jsp">
-            <img src="../../../images/logogreen.png" height="45px" width="55px">
+            <img src="${pageContext.request.contextPath}/images/logogreen.png" height="45px" width="55px">
         </a>
     </div>
     <br>
